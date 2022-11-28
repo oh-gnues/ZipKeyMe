@@ -72,14 +72,14 @@ const Home: NextPage = () => {
         }
       >
         <div className={"flex justify-center items-center"}>
-          <Link href="/fare">
+          <Link href="/farecheck">
             <MainButton text={"요금 조회"}>
               <FareCheck />
             </MainButton>
           </Link>
         </div>
         <div className={"flex justify-center items-center"}>
-          <Link href="/fare/farepay">
+          <Link href="/farepay">
             <MainButton text={"요금 납부"}>
               <FarePay />
             </MainButton>
