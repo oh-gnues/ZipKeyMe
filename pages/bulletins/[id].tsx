@@ -4,8 +4,13 @@ import Head from "next/head";
 import Textarea from "@components/Textarea";
 import { useRouter } from "next/router";
 import useSWR from "swr";
+import { useForm } from "react-hook-form";
+import useMutation from "@libs/client/useMutation";
+
 type Reple = {
   repleId: string;
+  postId: number;
+  id: string;
   repleAt: Date;
   content: string;
   users: {
@@ -34,12 +39,38 @@ interface PostDetailResponse {
   ok: Boolean;
   post: Post;
 }
+interface RepleResponse {
+  ok: Boolean;
+  reple: Reple;
+}
+
+interface RepleForm {
+  content: string;
+}
 
 const BulletinDetail: NextPage = () => {
   const router = useRouter();
-  const { data } = useSWR<PostDetailResponse>(
-    router.query.id ? `/api/bulletins/${router.query.id}` : null
+  const postId = router.query.id;
+  const { data, mutate } = useSWR<PostDetailResponse>(
+    router.query.id ? `/api/bulletins/${postId}` : null
   );
+  const [postReple] = useMutation<RepleResponse>(
+    `/api/bulletins/${postId}/reple`
+  );
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { isSubmitting },
+  } = useForm<RepleForm>();
+
+  const onValid = (validForm: RepleForm) => {
+    postReple(validForm);
+    console.log(data);
+    mutate();
+    router.reload();
+  };
   return (
     <Layout
       title={"게시글"}
@@ -138,20 +169,25 @@ const BulletinDetail: NextPage = () => {
 
       {/* 댓글 작성 */}
       <section className={"px-4"}>
-        <div className={""}>
+        <form onSubmit={handleSubmit(onValid)}>
           <Textarea
-            name={"description"}
-            placeholder={"댓글을 입력하세요."}
+            type="text"
+            placeholder="댓글 입력"
+            name={"content"}
+            register={register("content", {
+              required: true,
+            })}
             required
           />
           <button
+            disabled={isSubmitting}
             className={
               "mt-2 w-full bg-pantone text-white py-2 border border-transparent rounded-md shadow-sm text-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-pantone focus:outline-none"
             }
           >
             작성
           </button>
-        </div>
+        </form>
       </section>
     </Layout>
   );
