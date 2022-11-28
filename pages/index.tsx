@@ -12,6 +12,7 @@ import Vote from "public/vote.svg";
 import Complaint from "public/complaint.svg";
 import Notice from "public/notice.svg";
 import useUser from "@libs/client/useUser";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   // 로그인 되어 있지 않으면 로그인페이지로 리다이렉션
@@ -65,36 +66,52 @@ const Home: NextPage = () => {
       </section>
 
       {/* 메뉴 섹션 */}
-      <section className={"bg-white mt-12 grid grid-cols-3 grid-rows-2 rounded-3xl py-6 drop-shadow-2xl mx-6 gap-y-6"}>
+      <section
+        className={
+          "bg-white mt-12 grid grid-cols-3 grid-rows-2 rounded-3xl py-6 drop-shadow-2xl mx-6 gap-y-6"
+        }
+      >
         <div className={"flex justify-center items-center"}>
-          <MainButton text={"요금 조회"}>
-            <FareCheck />
-          </MainButton>
+          <Link href="/fare">
+            <MainButton text={"요금 조회"}>
+              <FareCheck />
+            </MainButton>
+          </Link>
         </div>
         <div className={"flex justify-center items-center"}>
-          <MainButton text={"요금 납부"}>
-            <FarePay />
-          </MainButton>
+          <Link href="/fare/farepay">
+            <MainButton text={"요금 납부"}>
+              <FarePay />
+            </MainButton>
+          </Link>
         </div>
         <div className={"flex justify-center items-center"}>
-          <MainButton text={"차량 등록"}>
-            <CarRegister />
-          </MainButton>
+          <Link href="/car">
+            <MainButton text={"차량 등록"}>
+              <CarRegister />
+            </MainButton>
+          </Link>
         </div>
         <div className={"flex justify-center items-center"}>
-          <MainButton text={"투표"}>
-            <Vote />
-          </MainButton>
+          <Link href="/">
+            <MainButton text={"투표"}>
+              <Vote />
+            </MainButton>
+          </Link>
         </div>
         <div className={"flex justify-center items-center"}>
-          <MainButton text={"민원"}>
-            <Complaint />
-          </MainButton>
+          <Link href="/">
+            <MainButton text={"민원"}>
+              <Complaint />
+            </MainButton>
+          </Link>
         </div>
         <div className={"flex justify-center items-center"}>
-          <MainButton text={"공지사항"}>
-            <Notice />
-          </MainButton>
+          <Link href="/notice">
+            <MainButton text={"공지사항"}>
+              <Notice />
+            </MainButton>
+          </Link>
         </div>
       </section>
     </Layout>
