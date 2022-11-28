@@ -177,6 +177,7 @@ const BulletinDetail: NextPage = () => {
             register={register("content", {
               required: true,
             })}
+            rows={4}
             required
           />
           <button

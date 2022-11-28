@@ -3,10 +3,14 @@ import Layout from "@components/Layout";
 import Head from "next/head";
 import Link from "next/link";
 import useUser from "@libs/client/useUser";
+import {Switch} from "@mui/material";
+import {useState} from "react";
 
 const Profile: NextPage = () => {
   const { user, isLoading } = useUser();
-  return (
+	const [notice, setNotice] = useState(false);
+
+	return (
     <Layout
       title={"마이페이지"}
       hasTabBar
@@ -182,29 +186,31 @@ const Profile: NextPage = () => {
         <section className={"bg-white border-2 rounded-lg px-3 border-[#D4D4D4] pb-4"}>
           <p className={"text-[#5F5F5F] text-sm mt-2 mb-5"}>기타</p>
           <div className={"space-y-6"}>
-            <Link
-              href={"/profile/sic"}
-              legacyBehavior
-            >
-              <a className={"flex items-center mx-3 space-x-3"}>
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M8 11.1111V8M8 4.88889H8.00778M4.73333 15H11.2667C12.5735 15 13.2269 15 13.726 14.7457C14.165 14.522 14.522 14.165 14.7457 13.726C15 13.2269 15 12.5735 15 11.2667V4.73333C15 3.42654 15 2.77315 14.7457 2.27402C14.522 1.83498 14.165 1.47802 13.726 1.25432C13.2269 1 12.5735 1 11.2667 1H4.73333C3.42654 1 2.77315 1 2.27402 1.25432C1.83498 1.47802 1.47802 1.83498 1.25432 2.27402C1 2.77315 1 3.42654 1 4.73333V11.2667C1 12.5735 1 13.2269 1.25432 13.726C1.47802 14.165 1.83498 14.522 2.27402 14.7457C2.77315 15 3.42654 15 4.73333 15Z"
-                    stroke="#444444"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                <p className={"font-bold"}>정보 동의 설정</p>
-              </a>
-            </Link>
+            <div className={"flex items-center mx-3"}>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 11.1111V8M8 4.88889H8.00778M4.73333 15H11.2667C12.5735 15 13.2269 15 13.726 14.7457C14.165 14.522 14.522 14.165 14.7457 13.726C15 13.2269 15 12.5735 15 11.2667V4.73333C15 3.42654 15 2.77315 14.7457 2.27402C14.522 1.83498 14.165 1.47802 13.726 1.25432C13.2269 1 12.5735 1 11.2667 1H4.73333C3.42654 1 2.77315 1 2.27402 1.25432C1.83498 1.47802 1.47802 1.83498 1.25432 2.27402C1 2.77315 1 3.42654 1 4.73333V11.2667C1 12.5735 1 13.2269 1.25432 13.726C1.47802 14.165 1.83498 14.522 2.27402 14.7457C2.77315 15 3.42654 15 4.73333 15Z"
+                  stroke="#444444"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              <p className={"font-bold mx-3"}>정보 동의 설정</p>
+              <Switch
+                className={"ml-auto"}
+                onClick={() => {
+                  setNotice(!notice);
+                }}
+              />
+            </div>
+
             <Link
               href={"/profile/withdrawal"}
               legacyBehavior

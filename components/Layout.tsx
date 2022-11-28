@@ -23,15 +23,15 @@ export default function Layout({
     router.back();
   };
 
+  const backgroundColorFAFAFA = ["/profile", "/farecheck"];
+
   return (
     <div
-      className={
-        router.pathname === "/"
-          ? "h-screen bg-[#F8F8F8]"
-          : router.pathname === "/profile"
-          ? "h-screen bg-[#FAFAFA]"
-          : ""
-      }
+      className={cls(
+        "h-full",
+        backgroundColorFAFAFA.includes(router.pathname) ? "bg-[#FAFAFA]" : "",
+        router.pathname === "/" ? "bg-[#F8F8F8]" : ""
+      )}
     >
       {/* Header */}
       <div
