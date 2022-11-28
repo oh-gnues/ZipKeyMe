@@ -6,8 +6,8 @@ interface InputProps {
   type: string;
   register: UseFormRegisterReturn;
   required: boolean;
-  placeHolder: string;
-  loginInput: boolean;
+  placeholder: string;
+  loginInput?: boolean;
 }
 
 export default function Input({
@@ -16,7 +16,7 @@ export default function Input({
   register,
   type,
   required,
-  placeHolder,
+  placeholder,
   loginInput,
 }: InputProps) {
   return (
@@ -29,7 +29,7 @@ export default function Input({
       </label>
       <div className="rounded-md relative flex items-center shadow-sm">
         <input
-          placeholder={placeHolder}
+          placeholder={placeholder}
           id={name}
           required={required}
           {...register}
