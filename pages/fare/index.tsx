@@ -10,7 +10,7 @@ const Fare: NextPage = () => {
       <Head><title>Fare Check</title></Head>
       <div className='bg-[#f5f5f5] grid'>
       <div className={"flex flex-col space-y-5 divide-y mt-6 "}>
-        <section className={"bg-white border-2 rounded-2xl px-3  pb-4 mt-5 w-80  ml-5 border-t-0 border-b-gray-300 shadow-md"}>
+        <section className={"bg-white border-2 rounded-2xl px-3  pb-4 mt-5 w-80 border-t-0 border-b-gray-300 shadow-md mx-auto"}>
           <p className='font-semibold text-xl mt-3'>한양대학로 43-1 202호</p>
           <p className='text-xs mt-2'>2022년 11월분</p>
           <p className='text-5xl float-right mt-2  font-sans'>123,456 <span className='text-xl'>원</span></p>  
@@ -28,7 +28,7 @@ const Fare: NextPage = () => {
       </div>
 
       <div className={"flex flex-col space-y-5 divide-y mt-12"}>
-        <section className={"bg-white border-2 rounded-2xl px-3 border-[#D4D4D4] pb-4 mt-5 w-80  ml-5 border-t-0 border-b-gray-300 shadow-md"}>
+        <section className={"bg-white border-2 rounded-2xl px-3 border-[#D4D4D4] pb-4 mt-5 w-80 border-t-0 border-b-gray-300 shadow-md mx-auto"}>
           <p className='font-semibold text-xl mt-3'>한양대학로 43-1 202호</p>
           <p className='text-xs mt-2'>2022년 11월분</p>
           <p className='text-5xl float-right mt-2  font-sans'>123,456 <span className='text-xl'>원</span></p>  
@@ -46,7 +46,7 @@ const Fare: NextPage = () => {
       </div>
 
       <div className={"flex flex-col space-y-5 divide-y mt-12"}>
-        <section className={"bg-white border-2 rounded-2xl px-3 border-[#D4D4D4] pb-4 mt-5 w-80  ml-5 border-t-0 border-b-gray-300 shadow-md"}>
+        <section className={"bg-white border-2 rounded-2xl px-3 border-[#D4D4D4] pb-4 mt-5 w-80 border-t-0 border-b-gray-300 shadow-md mx-auto"}>
           <p className='font-semibold text-xl mt-3'>한양대학로 43-1 202호</p>
           <p className='text-xs mt-2'>2022년 11월분</p>
           <p className='text-5xl float-right mt-2  font-sans'>123,456 <span className='text-xl'>원</span></p>  
