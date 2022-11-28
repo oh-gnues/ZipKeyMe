@@ -7,12 +7,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const {
     query: { id },
     session: { user },
-    content,
-  } = req.body;
+    body: { content },
+  } = req;
   const alreadyExists = await client.reple.findFirst({
     where: {
-      postId: id,
-      id: user?.id,
+      postId: +id!,
+      id: user?.account,
       content,
     },
   });
@@ -31,12 +31,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       data: {
         post: {
           connect: {
-            postId: id,
+            postId: +id!,
           },
         },
         users: {
           connect: {
-            id: user?.id,
+            id: user?.account,
           },
         },
         content,
