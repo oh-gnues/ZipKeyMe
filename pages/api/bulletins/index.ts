@@ -17,19 +17,32 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     });
     return res.json({ ok: true, posts });
   }
+
   if (req.method == "POST") {
-    // const post;
-    // return res.json({ ok: true, post });
-  }
-  if (req.method == "PATCH") {
-    // const post;
-    // return res.json({ ok: true, post });
+    const {
+      session: { user },
+      body: { title, content, isNotice },
+    } = req;
+
+    await client.post.create({
+      data: {
+        title,
+        content,
+        isNotice,
+        users: {
+          connect: {
+            id: user?.account,
+          },
+        },
+      },
+    });
+    return res.json({ ok: true });
   }
 }
 
 export default withSession(
   apiHandler({
-    method: ["GET", "POST", "PATCH"],
+    method: ["GET", "POST"],
     handler,
     isPrivate: true,
   })
