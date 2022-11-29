@@ -82,7 +82,7 @@ const Enter: NextPage = () => {
             })}
             name="account"
             type="text"
-            placeHolder="아이디를 입력해주세요."
+            placeholder="아이디를 입력해주세요."
             required
             loginInput
           />
@@ -90,7 +90,7 @@ const Enter: NextPage = () => {
             register={register("password")}
             name="password"
             type="password"
-            placeHolder="비밀번호를 입력해주세요."
+            placeholder="비밀번호를 입력해주세요."
             required
             loginInput
           />

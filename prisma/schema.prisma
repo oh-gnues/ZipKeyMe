@@ -89,7 +89,7 @@ model Fare {
 model Car {
   number     String    @id
   houseId    Int
-  type       String
+  carName    String
   owner      String
   ownerPhone String
   enroleAt   DateTime?

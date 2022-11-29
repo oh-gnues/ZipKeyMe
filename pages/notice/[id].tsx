@@ -37,7 +37,9 @@ interface PostDetailResponse {
 
 const NoticeDetail: NextPage = () => {
   const router = useRouter();
-  const { data } = useSWR<PostDetailResponse>(router.query.id ? `/api/bulletins/posts/${router.query.id}` : null);
+  const { data } = useSWR<PostDetailResponse>(
+    router.query.id ? `/api/bulletins/${router.query.id}` : null
+  );
   return (
     <Layout
       title={"공지"}
@@ -51,7 +53,11 @@ const NoticeDetail: NextPage = () => {
       {/* 유저 프로필 */}
       <section>
         <div className={"flex mt-5 mb-3 px-4 pb-2 items-center space-x-3"}>
-          <div className={"flex justify-center items-center w-10 h-10 rounded-lg border-2"}>
+          <div
+            className={
+              "flex justify-center items-center w-10 h-10 rounded-lg border-2"
+            }
+          >
             <svg
               width="23"
               height="23"
@@ -69,8 +75,12 @@ const NoticeDetail: NextPage = () => {
             </svg>
           </div>
           <div>
-            <p className={"text-sm font-bold text-gray-700"}>아파트 관리사무소</p>
-            <p className={"text-xs text-gray-500"}>{("" + data?.post?.postAt).substring(0, 10)}</p>
+            <p className={"text-sm font-bold text-gray-700"}>
+              아파트 관리사무소
+            </p>
+            <p className={"text-xs text-gray-500"}>
+              {("" + data?.post?.postAt).substring(0, 10)}
+            </p>
           </div>
         </div>
       </section>
