@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
+import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
+import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 
 type Reple = {
   repleId: string;
@@ -37,6 +39,7 @@ type Post = {
 
 interface PostDetailResponse {
   ok: Boolean;
+  isLiked: Boolean;
   post: Post;
 }
 interface RepleResponse {
@@ -117,9 +120,20 @@ const BulletinDetail: NextPage = () => {
       </section>
 
       {/* 게시글 내용 */}
-      <section className={"border-b-2 pb-20 px-4"}>
+      <section className={"relative border-b-2 pb-20 px-4"}>
         <p className={"my-2 text-2xl font-bold"}>{data?.post?.title}</p>
         <p className={"text-gray-800 leading-relaxed"}>{data?.post?.content}</p>
+        <div className="absolute w-full bottom-3 grid justify-items-center text-red-400 hover:text-red-600">
+          <div className="border-2 py-1 px-3 text-center rounded-full text-red-400 border-rose-300 hover:text-red-600 hover:border-rose-500">
+            {data?.isLiked ? (
+              <FavoriteRoundedIcon fontSize="large" />
+            ) : (
+              // <FavoriteBorderRoundedIcon fontSize="large" />
+              <FavoriteRoundedIcon fontSize="large" />
+            )}
+            <span className="ml-1 text-lg">{data?.post?._count.likes}</span>
+          </div>
+        </div>
       </section>
 
       {/* 댓글 */}
