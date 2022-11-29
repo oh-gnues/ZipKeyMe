@@ -102,7 +102,7 @@ model Car {
 // 2-3. 게시글 & 댓글 & 좋아요 게시글
 model Post {
   postId    Int        @id @default(autoincrement())
-  title     String     @unique
+  title     String
   id        String?
   content   String     @db.Text
   postAt    DateTime   @default(now())
