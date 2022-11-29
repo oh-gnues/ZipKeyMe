@@ -70,19 +70,24 @@ model Staff {
 // 2. 핵심 기능 관련 스키마
 // 2-1. 요금
 model Fare {
-  fareId        Int       @id @default(autoincrement())
-  houseId       Int
-  fareAt        DateTime  @default(now())
-  deadLine      DateTime
-  isPaid        Boolean   @default(false)
-  paidAt        DateTime?
-  electric      Int
-  water         Int
-  gas           Int
-  electricUsage Float
-  waterUsage    Float
-  gasUsage      Float
-  household     Household @relation(references: [houseId], fields: [houseId], onDelete: Cascade, onUpdate: Cascade)
+  fareId                Int       @id @default(autoincrement())
+  houseId               Int
+  fareAt                DateTime  @default(now())
+  isPaid                Boolean   @default(false)
+  paidAt                DateTime?
+  heating               Int
+  water                 Int
+  commonElectricity     Int
+  elevatorElectricity   Int
+  householdWaste        Int
+  management            Int
+  representative        Int
+  buildingInsurance     Int
+  expenses              Int
+  disinfection          Int
+  consignmentManagement Int
+  longTermRepairs       Int
+  household             Household @relation(references: [houseId], fields: [houseId], onDelete: Cascade, onUpdate: Cascade)
 }
 
 // 2-2. 차량
@@ -92,7 +97,7 @@ model Car {
   carName    String
   owner      String
   ownerPhone String
-  enroleAt   DateTime?
+  enrollAt   DateTime?
   applyAt    DateTime  @default(now())
   isAccept   Boolean   @default(false)
   isGuest    Boolean   @default(false)
