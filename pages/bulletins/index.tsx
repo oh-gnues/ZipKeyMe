@@ -4,6 +4,7 @@ import Head from "next/head";
 import Bulletin from "@components/Bulletin";
 import useUser from "@libs/client/useUser";
 import useSWR from "swr";
+import FloatingButton from "@components/FloatingButton";
 
 type Post = {
   postId: number;
@@ -60,6 +61,12 @@ const Bulletins: NextPage = () => {
           )
         )}
       </section>
+      <FloatingButton href={"/bulletins/write"}>
+        <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+             stroke="currentColor" aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+        </svg>
+      </FloatingButton>
     </Layout>
   );
 };
