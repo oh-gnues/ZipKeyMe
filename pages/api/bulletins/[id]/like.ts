@@ -7,11 +7,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const {
     query: { id },
     session: { user },
-  } = req.body;
+  } = req;
   const alreadyExists = await client.likes.findFirst({
     where: {
-      postId: id,
-      id: user?.id,
+      postId: +id!,
+      id: user?.account,
     },
   });
 
@@ -29,12 +29,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       data: {
         post: {
           connect: {
-            postId: id,
+            postId: +id!,
           },
         },
         user: {
           connect: {
-            id: user?.id,
+            id: user?.account,
           },
         },
       },
