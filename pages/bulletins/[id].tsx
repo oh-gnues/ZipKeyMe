@@ -74,6 +74,59 @@ const BulletinDetail: NextPage = () => {
     mutate();
     router.reload();
   };
+  console.log(data);
+  const onFavClick = () => {
+    if (!data) return;
+    if (data.isLiked) {
+      mutate(
+        {
+          ok: data.ok,
+          post: {
+            postId: data.post.postId,
+            title: data.post.title,
+            id: data.post.id,
+            content: data.post.content,
+            postAt: data.post.postAt,
+            isNotice: data.post.isNotice,
+            users: {
+              name: data.post.users?.name!,
+            },
+            reples: data.post.reples,
+            _count: {
+              reples: data.post._count.reples,
+              likes: data.post._count.likes - 1,
+            },
+          },
+          isLiked: !data.isLiked,
+        },
+        false
+      );
+    } else {
+      mutate(
+        {
+          ok: data.ok,
+          post: {
+            postId: data.post.postId,
+            title: data.post.title,
+            id: data.post.id,
+            content: data.post.content,
+            postAt: data.post.postAt,
+            isNotice: data.post.isNotice,
+            users: {
+              name: data.post.users?.name!,
+            },
+            reples: data.post.reples,
+            _count: {
+              reples: data.post._count.reples,
+              likes: data.post._count.likes + 1,
+            },
+          },
+          isLiked: !data.isLiked,
+        },
+        false
+      );
+    }
+  };
   return (
     <Layout
       title={"게시글"}
@@ -124,12 +177,14 @@ const BulletinDetail: NextPage = () => {
         <p className={"my-2 text-2xl font-bold"}>{data?.post?.title}</p>
         <p className={"text-gray-800 leading-relaxed"}>{data?.post?.content}</p>
         <div className="absolute w-full bottom-3 grid justify-items-center text-red-400 hover:text-red-600">
-          <div className="border-2 py-1 px-3 text-center rounded-full text-red-400 border-rose-300 hover:text-red-600 hover:border-rose-500">
+          <div
+            onClick={onFavClick}
+            className="border-2 py-1 px-3 text-center rounded-full text-red-400 border-rose-300 hover:text-red-600 hover:border-rose-500"
+          >
             {data?.isLiked ? (
               <FavoriteRoundedIcon fontSize="large" />
             ) : (
-              // <FavoriteBorderRoundedIcon fontSize="large" />
-              <FavoriteRoundedIcon fontSize="large" />
+              <FavoriteBorderRoundedIcon fontSize="large" />
             )}
             <span className="ml-1 text-lg">{data?.post?._count.likes}</span>
           </div>
