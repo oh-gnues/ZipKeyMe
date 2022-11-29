@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
 import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
+import { cls } from "@libs/client/utils";
 
 type Reple = {
   repleId: string;
@@ -176,10 +177,22 @@ const BulletinDetail: NextPage = () => {
       <section className={"relative border-b-2 pb-20 px-4"}>
         <p className={"my-2 text-2xl font-bold"}>{data?.post?.title}</p>
         <p className={"text-gray-800 leading-relaxed"}>{data?.post?.content}</p>
-        <div className="absolute w-full bottom-3 grid justify-items-center text-red-400 hover:text-red-600">
+        <div
+          className={cls(
+            "absolute w-full bottom-3 grid justify-items-center",
+            data?.isLiked
+              ? "text-red-600 hover:text-red-400"
+              : "text-red-400 hover:text-red-600"
+          )}
+        >
           <div
             onClick={onFavClick}
-            className="border-2 py-1 px-3 text-center rounded-full text-red-400 border-rose-300 hover:text-red-600 hover:border-rose-500"
+            className={cls(
+              "border-2 py-1 px-3 text-center rounded-full ",
+              data?.isLiked
+                ? "text-red-600 border-rose-500 hover:text-red-400 hover:border-rose-300"
+                : "text-red-400 border-rose-300 hover:text-red-600 hover:border-rose-500"
+            )}
           >
             {data?.isLiked ? (
               <FavoriteRoundedIcon fontSize="large" />
