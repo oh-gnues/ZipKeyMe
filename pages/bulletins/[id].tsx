@@ -75,7 +75,7 @@ const BulletinDetail: NextPage = () => {
     mutate();
     router.reload();
   };
-  console.log(data);
+
   const onFavClick = () => {
     if (!data) return;
     if (data.isLiked) {
