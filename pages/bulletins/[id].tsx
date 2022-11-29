@@ -61,7 +61,7 @@ const BulletinDetail: NextPage = () => {
   const [postReple] = useMutation<RepleResponse>(
     `/api/bulletins/${postId}/reple`
   );
-
+  const [toggleLike] = useMutation(`/api/bulletins/${postId}/like`);
   const {
     register,
     handleSubmit,
@@ -127,6 +127,7 @@ const BulletinDetail: NextPage = () => {
         false
       );
     }
+    toggleLike({});
   };
   return (
     <Layout
