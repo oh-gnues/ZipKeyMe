@@ -6,6 +6,9 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
+import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
+import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
+import { cls } from "@libs/client/utils";
 
 type Reple = {
   repleId: string;
@@ -37,6 +40,7 @@ type Post = {
 
 interface PostDetailResponse {
   ok: Boolean;
+  isLiked: Boolean;
   post: Post;
 }
 interface RepleResponse {
@@ -57,7 +61,7 @@ const BulletinDetail: NextPage = () => {
   const [postReple] = useMutation<RepleResponse>(
     `/api/bulletins/${postId}/reple`
   );
-
+  const [toggleLike] = useMutation(`/api/bulletins/${postId}/like`);
   const {
     register,
     handleSubmit,
@@ -70,6 +74,60 @@ const BulletinDetail: NextPage = () => {
     console.log(data);
     mutate();
     router.reload();
+  };
+
+  const onFavClick = () => {
+    if (!data) return;
+    if (data.isLiked) {
+      mutate(
+        {
+          ok: data.ok,
+          post: {
+            postId: data.post.postId,
+            title: data.post.title,
+            id: data.post.id,
+            content: data.post.content,
+            postAt: data.post.postAt,
+            isNotice: data.post.isNotice,
+            users: {
+              name: data.post.users?.name!,
+            },
+            reples: data.post.reples,
+            _count: {
+              reples: data.post._count.reples,
+              likes: data.post._count.likes - 1,
+            },
+          },
+          isLiked: !data.isLiked,
+        },
+        false
+      );
+    } else {
+      mutate(
+        {
+          ok: data.ok,
+          post: {
+            postId: data.post.postId,
+            title: data.post.title,
+            id: data.post.id,
+            content: data.post.content,
+            postAt: data.post.postAt,
+            isNotice: data.post.isNotice,
+            users: {
+              name: data.post.users?.name!,
+            },
+            reples: data.post.reples,
+            _count: {
+              reples: data.post._count.reples,
+              likes: data.post._count.likes + 1,
+            },
+          },
+          isLiked: !data.isLiked,
+        },
+        false
+      );
+    }
+    toggleLike({});
   };
   return (
     <Layout
@@ -117,9 +175,34 @@ const BulletinDetail: NextPage = () => {
       </section>
 
       {/* 게시글 내용 */}
-      <section className={"border-b-2 pb-20 px-4"}>
+      <section className={"relative border-b-2 pb-20 px-4"}>
         <p className={"my-2 text-2xl font-bold"}>{data?.post?.title}</p>
         <p className={"text-gray-800 leading-relaxed"}>{data?.post?.content}</p>
+        <div
+          className={cls(
+            "absolute w-full bottom-3 grid justify-items-center",
+            data?.isLiked
+              ? "text-red-600 hover:text-red-400"
+              : "text-red-400 hover:text-red-600"
+          )}
+        >
+          <div
+            onClick={onFavClick}
+            className={cls(
+              "border-2 py-1 px-3 text-center rounded-full ",
+              data?.isLiked
+                ? "text-red-600 border-rose-500 hover:text-red-400 hover:border-rose-300"
+                : "text-red-400 border-rose-300 hover:text-red-600 hover:border-rose-500"
+            )}
+          >
+            {data?.isLiked ? (
+              <FavoriteRoundedIcon fontSize="large" />
+            ) : (
+              <FavoriteBorderRoundedIcon fontSize="large" />
+            )}
+            <span className="ml-1 text-lg">{data?.post?._count.likes}</span>
+          </div>
+        </div>
       </section>
 
       {/* 댓글 */}

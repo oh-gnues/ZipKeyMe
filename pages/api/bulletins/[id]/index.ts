@@ -4,7 +4,10 @@ import client from "@libs/server/client";
 import { withSession } from "@libs/server/withSession";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { id } = req.query;
+  const {
+    query: { id },
+    session: { user },
+  } = req;
   const post = await client.post.findUnique({
     where: {
       postId: +id!,
@@ -25,7 +28,15 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       },
     },
   });
-  return res.json({ ok: true, post });
+  const isLiked = Boolean(
+    await client.likes.findFirst({
+      where: {
+        postId: +id!,
+        id: user?.account,
+      },
+    })
+  );
+  return res.json({ ok: true, post, isLiked });
 }
 
 export default withSession(

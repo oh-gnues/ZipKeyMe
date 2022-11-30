@@ -17,6 +17,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     });
     return res.json({ ok: true, posts });
   }
+
   if (req.method == "POST") {
     const {
       session: { user },
@@ -48,7 +49,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
 export default withSession(
   apiHandler({
-    method: ["GET", "POST", "PATCH"],
+    method: ["GET", "POST"],
     handler,
     isPrivate: true,
   })
