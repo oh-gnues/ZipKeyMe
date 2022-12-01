@@ -6,29 +6,26 @@ import { withSession } from "@libs/server/withSession";
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method == "GET") {
     const { user } = req.session;
+    const userHouseId = await client.user.findFirst({
+      select: { houseId: true },
+      where: { id: user?.account },
+    });
 
     const fares = await client.fare.findMany({
+      orderBy: {
+        fareAt: "desc",
+      },
       where: {
-        household: {
-          users: {
-            every: {
-              id: user?.account,
-            },
-          },
-        },
+        houseId: userHouseId?.houseId,
       },
     });
     return res.json({ ok: true, fares });
-  }
-  if (req.method == "PATCH") {
-    // const post;
-    // return res.json({ ok: true, post });
   }
 }
 
 export default withSession(
   apiHandler({
-    method: ["GET", "PATCH"],
+    method: ["GET"],
     handler,
     isPrivate: true,
   })
