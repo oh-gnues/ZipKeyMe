@@ -7,9 +7,9 @@ generator client {
 }
 
 datasource db {
-  provider             = "mysql"
-  url                  = env("DATABASE_URL")
-  referentialIntegrity = "prisma"
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 //--------------------------------------------------
@@ -35,6 +35,8 @@ model User {
   complaints    Complaint[]
   chattingRooms ChattingRoom[]
   userVotes     UserVote[]
+
+  @@index([houseId])
 }
 
 // 1-2. 가구
@@ -50,6 +52,7 @@ model Household {
   cars      Car[]
 
   @@unique([aptHo, aptDong])
+  @@index([aptDong])
 }
 
 // 1-3. 아파트 동
@@ -88,6 +91,8 @@ model Fare {
   consignmentManagement Int
   longTermRepairs       Int
   household             Household @relation(references: [houseId], fields: [houseId], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([houseId])
 }
 
 // 2-2. 차량
@@ -102,6 +107,8 @@ model Car {
   isAccept   Boolean   @default(false)
   isGuest    Boolean   @default(false)
   household  Household @relation(references: [houseId], fields: [houseId], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([houseId])
 }
 
 // 2-3. 게시글 & 댓글 & 좋아요 게시글
@@ -116,6 +123,8 @@ model Post {
   reples    Reple[]
   likes     Likes[]
   postFiles PostFile[]
+
+  @@index([id, postId])
 }
 
 model Reple {
@@ -126,6 +135,9 @@ model Reple {
   repleAt DateTime @default(now())
   post    Post     @relation(references: [postId], fields: [postId], onDelete: Cascade, onUpdate: Cascade)
   users   User     @relation(references: [id], fields: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([id])
+  @@index([postId])
 }
 
 model Likes {
@@ -134,6 +146,9 @@ model Likes {
   likeAt DateTime @default(now())
   post   Post     @relation(references: [postId], fields: [postId], onDelete: Cascade, onUpdate: Cascade)
   user   User     @relation(references: [id], fields: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([postId])
+  @@index([id])
 }
 
 // 2-5. 투표 & 후보 & 투표대상
@@ -157,6 +172,9 @@ model Candidate {
   profile String?
   fileId  Int?
   file    File?   @relation(references: [fileId], fields: [fileId], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([voteId])
+  @@index([fileId])
 }
 
 model VoteTarget {
@@ -164,6 +182,9 @@ model VoteTarget {
   vote      Vote      @relation(references: [voteId], fields: [voteId], onDelete: Cascade, onUpdate: Cascade)
   aptDong   Int
   apartment Apartment @relation(references: [aptDong], fields: [aptDong], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([voteId])
+  @@index([aptDong])
 }
 
 // 2-6. 민원
@@ -175,6 +196,8 @@ model Complaint {
   content  String
   state    States     @default(YET)
   users    User       @relation(references: [id], fields: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([id])
 }
 
 // 2-7. 채팅목록 & 채팅방
@@ -184,6 +207,8 @@ model ChattingRoom {
   createAt  DateTime   @default(now())
   users     User       @relation(references: [id], fields: [id], onDelete: Cascade, onUpdate: Cascade)
   chattings Chatting[]
+
+  @@index([id])
 }
 
 model Chatting {
@@ -193,6 +218,8 @@ model Chatting {
   sendAt       DateTime     @default(now())
   isRead       Boolean      @default(false)
   chattingRoom ChattingRoom @relation(references: [chatId], fields: [chatId], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([chatId])
 }
 
 //--------------------------------------------------
@@ -205,6 +232,9 @@ model UserVote {
   choice  Int?
   vote    Vote    @relation(references: [voteId], fields: [voteId], onDelete: Cascade, onUpdate: Cascade)
   user    User    @relation(references: [id], fields: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([id])
+  @@index([voteId])
 }
 
 // 3-7. 게시글 - 파일 관계
@@ -213,6 +243,9 @@ model PostFile {
   postId Int
   file   File @relation(references: [fileId], fields: [fileId], onDelete: Cascade, onUpdate: Cascade)
   post   Post @relation(references: [postId], fields: [postId], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([fileId])
+  @@index([postId])
 }
 
 //--------------------------------------------------
@@ -226,6 +259,8 @@ model Alarm {
   content String
   alertAt DateTime @default(now())
   user    User     @relation(references: [id], fields: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([id])
 }
 
 // 4-2. 파일
