@@ -113,13 +113,9 @@ const FarePay: NextPage = () => {
               </p>
               <p className="text-xs float-right text-[#5181ff]">
                 전월 대비
-                {difference < 0
-                  ? ` ${(difference * -1)
-                      .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원 감소`
-                  : ` ${difference
-                      .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원 증가`}
+                {" " +
+                  difference.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                원 변동
               </p>
               <div className="divide-y divide-gray-300 mt-6">
                 <div></div>
