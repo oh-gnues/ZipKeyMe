@@ -14,6 +14,7 @@ export default function Button({
 }: ButtonProps) {
   return (
     <button
+      onClick={onClick}
       {...rest}
       className={cls(
         "w-full bg-pantone hover:bg-pantone-500 text-white px-4 py-5 border border-transparent rounded-md shadow-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-pantone-500 focus:outline-none",
