@@ -77,7 +77,7 @@ model Fare {
   houseId               Int
   fareAt                DateTime  @default(now())
   isPaid                Boolean   @default(false)
-  paidAt                DateTime?
+  paidAt                DateTime? @updatedAt
   heating               Int
   water                 Int
   commonElectricity     Int
