@@ -5,7 +5,8 @@ import FareMontly from "@components/FareMontly";
 import useSWR from "swr";
 import { Fare } from "@prisma/client";
 import useUser from "@libs/client/useUser";
-import fare from "pages/api/fare";
+import totalFare from "@libs/client/totalFare";
+import getDate from "@libs/client/getDate";
 
 interface FaresResponse {
   ok: boolean;
@@ -28,7 +29,7 @@ const Fare: NextPage = () => {
         {data?.fares?.map((fare) => (
           <FareMontly
             key={fare.fareId}
-            month={+getDateData(fare).month}
+            month={+getDate(fare).month}
             address={
               "디비아파트 " +
               user?.household.aptDong +
@@ -36,17 +37,17 @@ const Fare: NextPage = () => {
               user?.household.aptHo +
               "호"
             }
-            year={+getDateData(fare).year}
-            fare={getTotal(fare)}
+            year={+getDate(fare).year}
+            fare={totalFare(fare)}
             dueDateYear={
-              getDateData(fare).month == 12
-                ? getDateData(fare).year + 1
-                : getDateData(fare).year
+              getDate(fare).month == 12
+                ? getDate(fare).year + 1
+                : getDate(fare).year
             }
             dueDateMonth={
-              getDateData(fare).month == 12 ? 1 : getDateData(fare).month + 1
+              getDate(fare).month == 12 ? 1 : getDate(fare).month + 1
             }
-            dueDateDay={+getDateData(fare).day}
+            dueDateDay={+getDate(fare).day}
             detailID={fare.fareId}
           />
         ))}
@@ -54,31 +55,5 @@ const Fare: NextPage = () => {
     </Layout>
   );
 };
-
-function getTotal(fare: Fare) {
-  let total = 0;
-  total += fare.heating;
-  total += fare.water;
-  total += fare.commonElectricity;
-  total += fare.elevatorElectricity;
-  total += fare.householdWaste;
-  total += fare.management;
-  total += fare.representative;
-  total += fare.buildingInsurance;
-  total += fare.expenses;
-  total += fare.disinfection;
-  total += fare.consignmentManagement;
-  total += fare.longTermRepairs;
-
-  return total;
-}
-function getDateData(fare: Fare): { year: number; month: number; day: number } {
-  const splitFareAt = fare.fareAt.toString().split("-");
-  return {
-    year: +splitFareAt[0],
-    month: +splitFareAt[1],
-    day: 1,
-  };
-}
 
 export default Fare;

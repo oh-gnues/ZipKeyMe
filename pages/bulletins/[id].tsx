@@ -58,7 +58,7 @@ const BulletinDetail: NextPage = () => {
   const { data, mutate } = useSWR<PostDetailResponse>(
     router.query.id ? `/api/bulletins/${postId}` : null
   );
-  const [postReple] = useMutation<RepleResponse>(
+  const [postReple, mutateState] = useMutation<RepleResponse>(
     `/api/bulletins/${postId}/reple`
   );
   const [toggleLike] = useMutation(`/api/bulletins/${postId}/like`);
@@ -69,11 +69,11 @@ const BulletinDetail: NextPage = () => {
     formState: { isSubmitting },
   } = useForm<RepleForm>();
 
+  console.log(mutateState);
+
   const onValid = (validForm: RepleForm) => {
     postReple(validForm);
-    console.log(data);
-    mutate();
-    router.reload();
+    reset();
   };
 
   const onFavClick = () => {
