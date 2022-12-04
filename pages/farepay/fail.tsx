@@ -5,7 +5,7 @@ import Button from "@components/Button";
 import { useRouter } from "next/router";
 import DoNotDisturbAltOutlinedIcon from "@mui/icons-material/DoNotDisturbAltOutlined";
 
-const Chats: NextPage = () => {
+const fail: NextPage = () => {
   const router = useRouter();
   return (
     <Layout
@@ -19,9 +19,7 @@ const Chats: NextPage = () => {
         <DoNotDisturbAltOutlinedIcon sx={{ fontSize: 400, color: "#f1f3f5" }} />
       </div>
       <div className="h-[70vh] grid justify-items-center  place-content-center">
-        <h1 className="antialiased font-bold text-8xl z-10 text-neutral-400">
-          결제 실패
-        </h1>
+        <h1 className="antialiased font-bold text-8xl z-10 text-neutral-400">결제 실패</h1>
       </div>
       <Button
         large
@@ -32,4 +30,4 @@ const Chats: NextPage = () => {
   );
 };
 
-export default Chats;
+export default fail;
