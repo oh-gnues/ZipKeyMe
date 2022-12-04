@@ -37,15 +37,23 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     });
     return res.json({ ok: true, fare });
   }
-  if (req.method == "PATCH") {
-    // const post;
-    // return res.json({ ok: true, post });
+  if (req.method == "POST") {
+    const { id: fareId } = req.query;
+    const fare = await client.fare.update({
+      where: {
+        fareId: +fareId!,
+      },
+      data: {
+        isPaid: true,
+      },
+    });
+    return res.json({ ok: true, fare });
   }
 }
 
 export default withSession(
   apiHandler({
-    method: ["GET", "PATCH"],
+    method: ["GET", "POST"],
     handler,
     isPrivate: true,
   })
