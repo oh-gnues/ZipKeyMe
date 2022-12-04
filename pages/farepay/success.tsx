@@ -77,7 +77,7 @@ const success: NextPage = () => {
             }
           >
             <p className="text-3xl mt-2">
-              {`${data?.fare.fareAt.toString().substring(0, 4)}년 ${data?.fare.fareAt
+              {`${data?.fare?.fareAt.toString().substring(0, 4)}년 ${data?.fare?.fareAt
                 .toString()
                 .substring(5, 7)}월 관리비`}
             </p>
@@ -94,9 +94,9 @@ const success: NextPage = () => {
             <p className="mt-4 font-semibold">
               납부 일자
               <span className="float-right">
-                {`${data?.fare.paidAt!.toString().substring(0, 4)}년 ${data?.fare
-                  .paidAt!.toString()
-                  .substring(5, 7)}월 ${data?.fare.paidAt!.toString().substring(8, 10)}일`}
+                {`${data?.fare?.paidAt!.toString().substring(0, 4)}년 ${data?.fare
+                  ?.paidAt!.toString()
+                  .substring(5, 7)}월 ${data?.fare?.paidAt!.toString().substring(8, 10)}일`}
               </span>
             </p>
           </section>

@@ -26,13 +26,13 @@ const FarePay: NextPage = () => {
   const [loading, setLoading] = useState(true);
   const [date, setDate] = useState<FareDate>();
   const [amount, setAmount] = useState(0);
-  const [difference, setDifference] = useState(0);
+  const [beforeAmount, setBeforeAmount] = useState(0);
 
   useEffect(() => {
     if (data?.ok && user && data?.fares) {
       setDate(getDate(data.fares.at(0)!));
       setAmount(totalFare(data.fares.at(0)!));
-      setDifference(amount - totalFare(data.fares.at(1)!));
+      setBeforeAmount(totalFare(data.fares.at(1)!));
       setLoading(false);
     }
   }, [data]);
@@ -98,12 +98,10 @@ const FarePay: NextPage = () => {
                 </div>
               </section>
             </div>
-
             <p className="text-gray-400 ml-5 mt-7">청구 금액</p>
-
             <section
               className={
-                "bg-white border-2 rounded-2xl px-3  pb-4 mt-5 w-80 mx-auto border-t-0 border-b-gray-300 shadow-md"
+                "bg-white border-2 rounded-2xl px-3  pb-4 my-5 w-80 mx-auto border-t-0 border-b-gray-300 shadow-md mb-10"
               }
             >
               <p className="font-bold mt-6">이번 달 관리비</p>
@@ -113,11 +111,15 @@ const FarePay: NextPage = () => {
               </p>
               <p className="text-xs float-right text-[#5181ff]">
                 전월 대비
-                {" " +
-                  difference.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                원 변동
+                {amount - beforeAmount > 0
+                  ? ` ${(amount - beforeAmount)
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원 증가`
+                  : ` ${(beforeAmount - amount)
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원 감소`}
               </p>
-              <div className="divide-y divide-gray-300 mt-6">
+              <div className="divide-y divide-gray-300 m-6">
                 <div></div>
                 <div></div>
               </div>
@@ -148,16 +150,14 @@ const FarePay: NextPage = () => {
               </p>
             </section>
             {data?.fares.at(0)?.isPaid ? null : (
-              <div className="w-60 h-14 font-black bg-[#6667ab] my-14 rounded-lg opacity-80 mx-auto ">
+              <div className="w-60 h-14 font-black bg-[#6667ab] my-4 mb-7 rounded-lg opacity-80 mx-auto ">
                 <p className="text-white text-center text-lg ">
                   <button
                     className="mt-3"
                     onClick={() =>
                       pay("카드", {
                         amount,
-                        orderId: `${
-                          data?.fares.at(0)?.fareId
-                        }lIJ-cs-36PKfaLwarmdqu`,
+                        orderId: `${data?.fares.at(0)?.fareId}-lIJ-cs-36PKfaLwarmdqu`,
                         orderName: `${date?.year}년 ${date?.month}월 관리비`,
                         customerName: user?.name,
                         successUrl: "http://localhost:3000/farepay/success",

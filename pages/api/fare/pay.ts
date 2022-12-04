@@ -17,7 +17,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     },
     where: {
       houseId: userHouseId?.houseId,
-      isPaid: false,
     },
   });
   return res.json({ ok: true, fares });
