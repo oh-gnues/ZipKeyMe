@@ -28,9 +28,8 @@ export default function Layout({
   return (
     <div
       className={cls(
-        "h-full",
         backgroundColorFAFAFA.includes(router.pathname) ? "bg-[#FAFAFA]" : "",
-        router.pathname === "/" ? "bg-[#F8F8F8]" : ""
+        router.pathname === "/" ? "bg-[#F8F8F8] h-screen" : "h-full"
       )}
     >
       {/* Header */}
