@@ -4,7 +4,6 @@ import Head from "next/head";
 import useMutation from "@libs/client/useMutation";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { router } from "next/client";
 import { useRouter } from "next/router";
 
 interface modifyForm {
@@ -29,9 +28,6 @@ const ChangeEmail: NextPage = () => {
   const [isEnd, setIsEnd] = useState(false);
   const onValid = (validForm: modifyForm) => {
     if (loading) return;
-    // console.dir(validForm);
-    // console.log(checkEmail);
-
     if (validForm.newThing === checkEmail) {
       changeUserInfo(validForm);
     } else {
