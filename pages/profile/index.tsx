@@ -3,14 +3,14 @@ import Layout from "@components/Layout";
 import Head from "next/head";
 import Link from "next/link";
 import useUser from "@libs/client/useUser";
-import {Switch} from "@mui/material";
-import {useState} from "react";
+import { Switch } from "@mui/material";
+import { useState } from "react";
 
 const Profile: NextPage = () => {
   const { user, isLoading } = useUser();
-	const [notice, setNotice] = useState(false);
+  const [notice, setNotice] = useState(false);
 
-	return (
+  return (
     <Layout
       title={"마이페이지"}
       hasTabBar
@@ -25,7 +25,11 @@ const Profile: NextPage = () => {
         <section className={"bg-white border-2 rounded-lg px-3 border-[#D4D4D4] pb-4"}>
           <p className={"text-[#5F5F5F] text-sm mt-2 mb-5"}>내 정보</p>
           <div className={"flex items-center space-x-3"}>
-            <div className={"flex justify-center items-center w-16 h-16 rounded-lg border-2 border-[#D4D4D4]"}>
+            <div
+              className={
+                "flex justify-center items-center w-16 h-16 rounded-lg border-2 border-[#D4D4D4]"
+              }
+            >
               <svg
                 width="40"
                 height="40"
@@ -232,6 +236,30 @@ const Profile: NextPage = () => {
                   />
                 </svg>
                 <p className={"font-bold"}>회원 탈퇴</p>
+              </a>
+            </Link>
+
+            <Link
+              href={"/enter"}
+              legacyBehavior
+            >
+              <a className={"flex items-center mx-3 space-x-3"}>
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="-2 0 18 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M11.25 1.75H5.25C4.85218 1.75 4.47064 1.87292 4.18934 2.09171C3.90804 2.3105 3.75 2.60725 3.75 2.91667V11.0833C3.75 11.3928 3.90804 11.6895 4.18934 11.9083C4.47064 12.1271 4.85218 12.25 5.25 12.25H11.25M14.25 7L11.25 4.66667M14.25 7L11.25 9.33333M14.25 7H6.75"
+                    stroke="#444444"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <p className={"font-bold"}>로그아웃</p>
               </a>
             </Link>
           </div>
