@@ -23,7 +23,7 @@ export default function Layout({
     router.back();
   };
 
-  const backgroundColorFAFAFA = ["/profile", "/farecheck"];
+  const backgroundColorFAFAFA = ["/profile", "/farecheck", "/car"];
 
   return (
     <div
