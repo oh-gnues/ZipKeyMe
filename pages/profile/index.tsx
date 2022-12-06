@@ -240,10 +240,13 @@ const Profile: NextPage = () => {
             </Link>
 
             <Link
-              href={"/enter"}
+              href={"/"}
               legacyBehavior
             >
-              <a className={"flex items-center mx-3 space-x-3"}>
+              <a
+                onClick={async () => await fetch("api/users/logout")}
+                className={"flex items-center mx-3 space-x-3"}
+              >
                 <svg
                   width="14"
                   height="14"
