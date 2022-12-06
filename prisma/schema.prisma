@@ -164,14 +164,13 @@ model Vote {
 }
 
 model Candidate {
-  candId  Int     @id @default(autoincrement())
-  voteId  Int
-  vote    Vote    @relation(references: [voteId], fields: [voteId], onDelete: Cascade, onUpdate: Cascade)
-  name    String
-  count   Int     @default(0)
-  profile String?
-  fileId  Int?
-  file    File?   @relation(references: [fileId], fields: [fileId], onDelete: Cascade, onUpdate: Cascade)
+  candId   Int        @id @default(autoincrement())
+  voteId   Int
+  vote     Vote       @relation(references: [voteId], fields: [voteId], onDelete: Cascade, onUpdate: Cascade)
+  name     String
+  fileId   Int?
+  file     File?      @relation(references: [fileId], fields: [fileId], onDelete: Cascade, onUpdate: Cascade)
+  UserVote UserVote[]
 
   @@index([voteId])
   @@index([fileId])
@@ -226,13 +225,14 @@ model Chatting {
 // 3. 관계 스키마
 // 3-1. 입주민 - 투표 관계
 model UserVote {
-  voteId  Int     @id
-  id      String
-  isVoted Boolean @default(false)
-  choice  Int?
-  vote    Vote    @relation(references: [voteId], fields: [voteId], onDelete: Cascade, onUpdate: Cascade)
-  user    User    @relation(references: [id], fields: [id], onDelete: Cascade, onUpdate: Cascade)
+  voteId    Int       @id
+  id        String
+  candId    Int
+  candidate Candidate @relation(references: [candId], fields: [candId], onDelete: Cascade, onUpdate: Cascade)
+  vote      Vote      @relation(references: [voteId], fields: [voteId], onDelete: Cascade, onUpdate: Cascade)
+  user      User      @relation(references: [id], fields: [id], onDelete: Cascade, onUpdate: Cascade)
 
+  @@index([candId])
   @@index([id])
   @@index([voteId])
 }
