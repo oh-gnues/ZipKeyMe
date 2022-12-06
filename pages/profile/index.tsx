@@ -5,10 +5,14 @@ import Link from "next/link";
 import useUser from "@libs/client/useUser";
 import { Switch } from "@mui/material";
 import { useState } from "react";
+import { useRouter } from "next/router";
+import { METHODS } from "http";
+import { json } from "stream/consumers";
 
 const Profile: NextPage = () => {
   const { user, isLoading } = useUser();
   const [notice, setNotice] = useState(false);
+  const router = useRouter();
 
   return (
     <Layout
@@ -220,7 +224,11 @@ const Profile: NextPage = () => {
               legacyBehavior
             >
               <a
-                onClick={async () => await fetch("api/users/logout")}
+                onClick={async () => {
+                  await fetch("api/users/logout", { method: "POST" })
+                    .then((response) => response.json())
+                    .then((data) => (data.ok ? router.push("/enter") : null));
+                }}
                 className={"flex items-center mx-3 space-x-3"}
               >
                 <svg
@@ -233,9 +241,9 @@ const Profile: NextPage = () => {
                   <path
                     d="M11.25 1.75H5.25C4.85218 1.75 4.47064 1.87292 4.18934 2.09171C3.90804 2.3105 3.75 2.60725 3.75 2.91667V11.0833C3.75 11.3928 3.90804 11.6895 4.18934 11.9083C4.47064 12.1271 4.85218 12.25 5.25 12.25H11.25M14.25 7L11.25 4.66667M14.25 7L11.25 9.33333M14.25 7H6.75"
                     stroke="#444444"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
                 <p className={"font-bold"}>로그아웃</p>
