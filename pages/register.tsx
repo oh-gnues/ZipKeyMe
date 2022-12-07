@@ -6,7 +6,7 @@ import Layout from "@components/Layout";
 import { useEffect, useState } from "react";
 import { FieldErrors, useForm } from "react-hook-form";
 import Button from "@components/Button";
-import { useRouter } from "next/router";
+import { useRouter } from "next/dist/client/router";
 import useMutation from "@libs/client/useMutation";
 
 interface SignUpForm {

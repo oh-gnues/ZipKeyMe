@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Layout from "@components/Layout";
 import Head from "next/head";
 import useSWR from "swr";
-import { useRouter } from "next/router";
+import { useRouter } from "next/dist/client/router";
 import { useState, useEffect } from "react";
 
 const FareCheckDetail: NextPage = () => {

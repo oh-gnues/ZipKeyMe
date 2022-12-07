@@ -3,7 +3,7 @@
 // 유저 로그인 페이지
 import type { NextPage } from "next";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/dist/client/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";

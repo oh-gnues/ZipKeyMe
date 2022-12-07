@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Layout from "@components/Layout";
 import Head from "next/head";
 import Button from "@components/Button";
-import { useRouter } from "next/router";
+import { useRouter } from "next/dist/client/router";
 
 const Withdrawal: NextPage = () => {
   const router = useRouter();

@@ -3,7 +3,7 @@ import Layout from "@components/Layout";
 import Head from "next/head";
 import Button from "@components/Button";
 import useMutation from "@libs/client/useMutation";
-import { useRouter } from "next/router";
+import { useRouter } from "next/dist/client/router";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { useEffect, useState } from "react";
 import fare from "pages/api/fare";

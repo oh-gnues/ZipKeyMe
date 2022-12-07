@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Layout from "@components/Layout";
 import Head from "next/head";
 import Textarea from "@components/Textarea";
-import { useRouter } from "next/router";
+import { useRouter } from "next/dist/client/router";
 import useSWR from "swr";
 type Reple = {
   repleId: string;
