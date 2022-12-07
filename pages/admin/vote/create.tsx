@@ -3,13 +3,13 @@ import type { NextPage } from "next";
 import { Switch } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import { FieldErrors, useFieldArray, useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
 import Button from "@components/Button";
 import Input from "@components/Input";
 import Head from "next/head";
 import Layout from "@components/Layout";
-import { Label } from "@mui/icons-material";
+import { Vote } from "@prisma/client";
 
 interface VoteForm {
   title: string;
@@ -23,13 +23,12 @@ interface VoteForm {
 
 interface MutationResult {
   ok: Boolean;
-  message?: string;
+  vote: Vote;
 }
 
 const Enter: NextPage = () => {
-  //   const [createVote, { loading, data, error }] =
-  // useMutation<MutationResult>("/api/users/signIn");
-  const { register, handleSubmit, control } = useForm<VoteForm>({
+  const [createVote, { loading, data }] = useMutation<MutationResult>("/api/vote");
+  const { register, handleSubmit, control, getValues } = useForm<VoteForm>({
     defaultValues: {
       candidate: [{ name: "찬성" }, { name: "반대" }],
     },
@@ -38,11 +37,22 @@ const Enter: NextPage = () => {
   const [failReason, setFailReason] = useState("");
   const [showReason, setShowReason] = useState(false);
   const onValid = (validForm: VoteForm) => {
-    // if (loading) return;
-    // createVote(validForm);
+    if (loading) return;
+    createVote(validForm);
+  };
+  const onInValid = (errors: FieldErrors) => {
+    const error = errors.finishAt?.message?.toString();
+    if (error !== undefined) {
+      setFailReason(error);
+      setShowReason(true);
+    }
   };
   const router = useRouter();
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (data?.ok) {
+      router.push(`/admin/vote/${data.vote.voteId}`);
+    }
+  }, [data, router]);
 
   return (
     <Layout
@@ -57,7 +67,7 @@ const Enter: NextPage = () => {
       <div className="flex flex-col items-center">
         <form
           className="w-full px-2 space-y-3 mt-3"
-          onSubmit={handleSubmit((data) => console.log(data))}
+          onSubmit={handleSubmit(onValid, onInValid)}
         >
           <h1>투표 제목</h1>
           <Input
@@ -78,14 +88,14 @@ const Enter: NextPage = () => {
                     key={field.id}
                   >
                     <input
-                      className="w-full"
+                      className="w-full focus:outline-none"
                       placeholder="내용입력"
                       {...register(`candidate.${index}.name` as const, {
                         required: true,
                       })}
                     />
                     <button
-                      className="w-1/12"
+                      className={`w-1/12 ${getValues("candidate").length < 3 ? "hidden" : null}`}
                       type="button"
                       onClick={() => remove(index)}
                     >
@@ -98,7 +108,7 @@ const Enter: NextPage = () => {
             <div className="py-4">
               <a
                 onClick={() => append({ name: "" })}
-                className="flex items-center mx-3 space-x-3"
+                className="flex flex-row-start  mx-3 space-x-3 w-1/3"
               >
                 <svg
                   width="22"
@@ -151,6 +161,10 @@ const Enter: NextPage = () => {
             <Input
               register={register("finishAt", {
                 required: true,
+                validate: {
+                  islater: (d) =>
+                    d.valueOf() > getValues("startAt").valueOf() || "올바르지 않은 날짜입니다.",
+                },
               })}
               name="finishAt"
               type="Date"
@@ -163,7 +177,6 @@ const Enter: NextPage = () => {
             <Switch
               {...register("reChoice")}
               defaultChecked
-              color="default"
             />
             <h1 className="font-base">투표 수정 허용</h1>
           </section>
@@ -195,15 +208,3 @@ const Enter: NextPage = () => {
   );
 };
 export default Enter;
-{
-  /* <Input
-            register={register("account", {
-              required: true,
-            })}
-            name="account"
-            type="text"
-            placeholder="아이디를 입력해주세요."
-            required
-            loginInput
-          /> */
-}
