@@ -16,7 +16,7 @@ interface VoteForm {
   startAt: Date;
   finishAt: Date;
   reChoice: Boolean;
-  candidate: {
+  candidates: {
     name: string;
   }[];
 }
@@ -30,10 +30,10 @@ const Enter: NextPage = () => {
   const [createVote, { loading, data }] = useMutation<MutationResult>("/api/vote");
   const { register, handleSubmit, control, getValues } = useForm<VoteForm>({
     defaultValues: {
-      candidate: [{ name: "찬성" }, { name: "반대" }],
+      candidates: [{ name: "찬성" }, { name: "반대" }],
     },
   });
-  const { fields, append, remove } = useFieldArray({ name: "candidate", control });
+  const { fields, append, remove } = useFieldArray({ name: "candidates", control });
   const [failReason, setFailReason] = useState("");
   const [showReason, setShowReason] = useState(false);
   const onValid = (validForm: VoteForm) => {
@@ -90,12 +90,12 @@ const Enter: NextPage = () => {
                     <input
                       className="w-full focus:outline-none"
                       placeholder="내용입력"
-                      {...register(`candidate.${index}.name` as const, {
+                      {...register(`candidates.${index}.name` as const, {
                         required: true,
                       })}
                     />
                     <button
-                      className={`w-1/12 ${getValues("candidate").length < 3 ? "hidden" : null}`}
+                      className={`w-1/12 ${getValues("candidates").length < 3 ? "hidden" : null}`}
                       type="button"
                       onClick={() => remove(index)}
                     >
@@ -180,12 +180,13 @@ const Enter: NextPage = () => {
             />
             <h1 className="font-base">투표 수정 허용</h1>
           </section>
-          <div className="mt-5"></div>
-          <Button
-            large
-            type={"submit"}
-            text={"등록"}
-          ></Button>
+          <div className="pt-7">
+            <Button
+              large
+              type={"submit"}
+              text={"등록"}
+            ></Button>
+          </div>
         </form>
       </div>
       {/* 로그인 실패시 뜨는 modal */}
