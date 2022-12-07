@@ -23,7 +23,8 @@ const Car: NextPage = () => {
 						number={car.number}
 						name={car.carName}
 						owner={car.owner}
-						enrollAt={car.enrollAt?.toString()}
+						applyAt={car.applyAt?.toString()}
+						isAccept={car.isAccept}
 					/>
 				))}
 			</div>
