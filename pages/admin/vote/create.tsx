@@ -23,7 +23,7 @@ interface VoteForm {
 
 interface MutationResult {
   ok: Boolean;
-  vote: Vote;
+  vote?: Vote;
 }
 
 const Enter: NextPage = () => {
@@ -50,7 +50,8 @@ const Enter: NextPage = () => {
   const router = useRouter();
   useEffect(() => {
     if (data?.ok) {
-      router.push(`/admin/vote/${data.vote.voteId}`);
+      //   router.push(`/admin/vote/${data.vote.voteId}`);
+      console.log(data);
     }
   }, [data, router]);
 

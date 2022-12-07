@@ -5,11 +5,31 @@ import { withSession } from "@libs/server/withSession";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method == "POST") {
-    const { candidate, title, startAt, finishAt, reChoice } = req.body;
-    console.log(candidate, title, startAt, finishAt, reChoice);
-  }
+    const { candidates, title, startAt, finishAt, reChoice } = req.body;
+    let candidatesInput: { name: string }[] = [];
+    candidates.forEach((candi: { name: string }) => {
+      candidatesInput.push(candi);
+    });
 
-  res.json({ ok: true });
+    const vote = await client.vote.create({
+      data: {
+        title,
+        startAt: startAt + "T00:00:00.000Z",
+        finishAt: finishAt + "T00:00:00.000Z",
+        reChoice,
+        candidates: {
+          createMany: {
+            data: candidatesInput,
+          },
+        },
+      },
+      include: {
+        candidates: true,
+      },
+    });
+    console.log(vote);
+    res.json({ ok: true, vote });
+  }
 }
 
-export default withSession(apiHandler({ method: ["GET", "POST"], handler }));
+export default apiHandler({ method: ["GET", "POST"], handler });
