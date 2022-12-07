@@ -101,7 +101,7 @@ model Car {
   carName    String
   owner      String
   ownerPhone String
-  enrollAt   DateTime?
+  enrollAt   DateTime? @updatedAt
   applyAt    DateTime  @default(now())
   isAccept   Boolean   @default(false)
   isGuest    Boolean   @default(false)

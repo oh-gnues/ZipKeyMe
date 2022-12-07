@@ -23,12 +23,12 @@ export default function Layout({
     router.back();
   };
 
-  const backgroundColorFAFAFA = ["/profile", "/farecheck"];
+  const backgroundColorFAFAFA = ["/profile", "/farecheck", "/car"];
 
   return (
     <div
       className={cls(
-        "h-full",
+        "h-screen",
         backgroundColorFAFAFA.includes(router.pathname) ? "bg-[#FAFAFA]" : "",
         router.pathname === "/" ? "bg-[#F8F8F8]" : ""
       )}
