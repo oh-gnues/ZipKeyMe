@@ -178,9 +178,10 @@ model Candidate {
 model Complaint {
   comId    Int        @id @default(autoincrement())
   id       String
+  title    String
   category Categories
   comAt    DateTime   @default(now())
-  content  String
+  content  String     @db.MediumText
   state    States     @default(YET)
   users    User       @relation(references: [id], fields: [id], onDelete: Cascade, onUpdate: Cascade)
 
@@ -270,6 +271,7 @@ enum Categories {
   FREEZE
   IN_OR_OUT
   FARE
+  CAR
   ETC
 }
 
