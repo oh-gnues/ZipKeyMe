@@ -154,8 +154,8 @@ model Likes {
 model Vote {
   voteId     Int         @id @default(autoincrement())
   title      String      @unique
-  startAt    DateTime
-  finishAt   DateTime
+  startAt    DateTime    @db.Date
+  finishAt   DateTime    @db.Date
   reChoice   Boolean     @default(false)
   candidates Candidate[]
   userVotes  UserVote[]

@@ -1,4 +1,3 @@
-// 유저 로그인 페이지
 import type { NextPage } from "next";
 import { Switch } from "@mui/material";
 import { useRouter } from "next/router";
@@ -10,6 +9,7 @@ import Input from "@components/Input";
 import Head from "next/head";
 import Layout from "@components/Layout";
 import { Vote } from "@prisma/client";
+import { ResetTv } from "@mui/icons-material";
 
 interface VoteForm {
   title: string;
@@ -28,10 +28,11 @@ interface MutationResult {
 
 const Enter: NextPage = () => {
   const [createVote, { loading, data }] = useMutation<MutationResult>("/api/vote");
-  const { register, handleSubmit, control, getValues } = useForm<VoteForm>({
+  const { register, handleSubmit, control, getValues, reset } = useForm<VoteForm>({
     defaultValues: {
       candidates: [{ name: "찬성" }, { name: "반대" }],
     },
+    // mode: "onBlur",
   });
   const { fields, append, remove } = useFieldArray({ name: "candidates", control });
   const [failReason, setFailReason] = useState("");
@@ -50,6 +51,7 @@ const Enter: NextPage = () => {
   const router = useRouter();
   useEffect(() => {
     if (data?.ok) {
+      reset();
       //   router.push(`/admin/vote/${data.vote.voteId}`);
       console.log(data);
     }
@@ -69,6 +71,7 @@ const Enter: NextPage = () => {
         <form
           className="w-full px-2 space-y-3 mt-3"
           onSubmit={handleSubmit(onValid, onInValid)}
+          //   onBlur={handleSubmit(onValid, onInValid)}
         >
           <h1>투표 제목</h1>
           <Input
@@ -176,8 +179,9 @@ const Enter: NextPage = () => {
           <hr />
           <section className="flex flex-row-reverse items-center">
             <Switch
-              {...register("reChoice")}
+              onClick={() => console.log("clicked")}
               defaultChecked
+              {...register("reChoice")}
             />
             <h1 className="font-base">투표 수정 허용</h1>
           </section>
