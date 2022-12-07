@@ -3,14 +3,18 @@ import Layout from "@components/Layout";
 import Head from "next/head";
 import Link from "next/link";
 import useUser from "@libs/client/useUser";
-import {Switch} from "@mui/material";
-import {useState} from "react";
+import { Switch } from "@mui/material";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { METHODS } from "http";
+import { json } from "stream/consumers";
 
 const Profile: NextPage = () => {
   const { user, isLoading } = useUser();
-	const [notice, setNotice] = useState(false);
+  const [notice, setNotice] = useState(false);
+  const router = useRouter();
 
-	return (
+  return (
     <Layout
       title={"마이페이지"}
       hasTabBar
@@ -25,7 +29,11 @@ const Profile: NextPage = () => {
         <section className={"bg-white border-2 rounded-lg px-3 border-[#D4D4D4] pb-4"}>
           <p className={"text-[#5F5F5F] text-sm mt-2 mb-5"}>내 정보</p>
           <div className={"flex items-center space-x-3"}>
-            <div className={"flex justify-center items-center w-16 h-16 rounded-lg border-2 border-[#D4D4D4]"}>
+            <div
+              className={
+                "flex justify-center items-center w-16 h-16 rounded-lg border-2 border-[#D4D4D4]"
+              }
+            >
               <svg
                 width="40"
                 height="40"
@@ -108,30 +116,6 @@ const Profile: NextPage = () => {
         <section className={"bg-white border-2 rounded-lg px-3 border-[#D4D4D4] pb-4"}>
           <p className={"text-[#5F5F5F] text-sm mt-2 mb-5"}>이용 안내</p>
           <div className={"space-y-6"}>
-            <Link
-              href={"/profile/ask"}
-              legacyBehavior
-            >
-              <a className={"flex items-center mx-3 space-x-3"}>
-                <svg
-                  width="16"
-                  height="17"
-                  viewBox="0 0 16 17"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M6.44444 4.89063C6.58149 4.50106 6.85198 4.17256 7.20802 3.96331C7.56405 3.75407 7.98265 3.67758 8.38968 3.7474C8.79671 3.81721 9.16589 4.02883 9.43184 4.34476C9.6978 4.66069 9.84336 5.06056 9.84274 5.47353C9.84274 6.63932 8.09405 7.22222 8.09405 7.22222M8.11659 9.55556H8.12437M4.11111 12.6667V14.4832C4.11111 14.8976 4.11111 15.1048 4.19607 15.2113C4.26995 15.3038 4.38199 15.3577 4.50042 15.3575C4.6366 15.3574 4.79841 15.2279 5.12203 14.969L6.97739 13.4848C7.3564 13.1815 7.54591 13.0299 7.75693 12.9221C7.94415 12.8265 8.14344 12.7566 8.34939 12.7143C8.58152 12.6667 8.82421 12.6667 9.30958 12.6667H11.2667C12.5735 12.6667 13.2269 12.6667 13.726 12.4123C14.165 12.1886 14.522 11.8317 14.7457 11.3926C15 10.8935 15 10.2401 15 8.93333V4.73333C15 3.42654 15 2.77315 14.7457 2.27402C14.522 1.83498 14.165 1.47802 13.726 1.25432C13.2269 1 12.5735 1 11.2667 1H4.73333C3.42654 1 2.77315 1 2.27402 1.25432C1.83498 1.47802 1.47802 1.83498 1.25432 2.27402C1 2.77315 1 3.42654 1 4.73333V9.55556C1 10.2789 1 10.6405 1.07951 10.9372C1.29526 11.7425 1.92421 12.3714 2.72942 12.5872C3.02614 12.6667 3.3878 12.6667 4.11111 12.6667Z"
-                    stroke="#444444"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                <p className={"font-bold"}>문의하기</p>
-              </a>
-            </Link>
-
             <Link
               href={"/profile/terms"}
               legacyBehavior
@@ -232,6 +216,37 @@ const Profile: NextPage = () => {
                   />
                 </svg>
                 <p className={"font-bold"}>회원 탈퇴</p>
+              </a>
+            </Link>
+
+            <Link
+              href={"/"}
+              legacyBehavior
+            >
+              <a
+                onClick={async () => {
+                  await fetch("api/users/logout", { method: "POST" })
+                    .then((response) => response.json())
+                    .then((data) => (data.ok ? router.push("/enter") : null));
+                }}
+                className={"flex items-center mx-3 space-x-3"}
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="-2 0 18 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M11.25 1.75H5.25C4.85218 1.75 4.47064 1.87292 4.18934 2.09171C3.90804 2.3105 3.75 2.60725 3.75 2.91667V11.0833C3.75 11.3928 3.90804 11.6895 4.18934 11.9083C4.47064 12.1271 4.85218 12.25 5.25 12.25H11.25M14.25 7L11.25 4.66667M14.25 7L11.25 9.33333M14.25 7H6.75"
+                    stroke="#444444"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <p className={"font-bold"}>로그아웃</p>
               </a>
             </Link>
           </div>
