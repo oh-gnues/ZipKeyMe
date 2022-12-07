@@ -93,7 +93,7 @@ const Home: NextPage = () => {
           </Link>
         </div>
         <div className={"flex justify-center items-center"}>
-          <Link href="/">
+          <Link href="/vote">
             <MainButton text={"투표"}>
               <Vote />
             </MainButton>
