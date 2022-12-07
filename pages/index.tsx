@@ -87,7 +87,7 @@ const Home: NextPage = () => {
         </div>
         <div className={"flex justify-center items-center"}>
           <Link href="/car">
-            <MainButton text={"차량 등록"}>
+            <MainButton text={"차량"}>
               <CarRegister />
             </MainButton>
           </Link>

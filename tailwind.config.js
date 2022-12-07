@@ -8,6 +8,8 @@ module.exports = {
     extend: {
       colors: {
         'pantone': '#6667AB',
+        'pantone-light': '#A3A5D9',
+        'pantone-dark': '#3D3F6F',
       },
     },
   },
