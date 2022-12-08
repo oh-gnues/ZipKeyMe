@@ -4,6 +4,7 @@ import Head from "next/head";
 import useSWR from "swr";
 import { Vote } from "@prisma/client";
 import Link from "next/link";
+import FloatingButton from "@components/FloatingButton";
 
 interface votesResponse {
   ok: true;
@@ -11,11 +12,11 @@ interface votesResponse {
 }
 
 const Chats: NextPage = () => {
-  const { data } = useSWR<votesResponse>("/api/vote");
+  const { data } = useSWR<votesResponse>("/api/vote/all");
   console.log(data);
   return (
     <Layout
-      title={"투표"}
+      title={"투표관리"}
       hasTabBar
       canGoBack
     >
@@ -24,8 +25,9 @@ const Chats: NextPage = () => {
       </Head>
       <section className={"divide-y flex flex-col justify-itmes-center w-full mt-7"}>
         {data?.votes?.map((vote) => (
-          <div key={vote.voteId}>
+          <div>
             <Link
+              key={vote.voteId}
               id={vote.voteId.toString()}
               href={`/vote/${vote.voteId}`}
               legacyBehavior
@@ -44,6 +46,23 @@ const Chats: NextPage = () => {
           </div>
         ))}
       </section>
+      <FloatingButton href={"/admin/vote/create"}>
+        <svg
+          className="h-6 w-6"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+          />
+        </svg>
+      </FloatingButton>
     </Layout>
   );
 };
