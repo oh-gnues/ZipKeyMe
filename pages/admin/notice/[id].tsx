@@ -6,7 +6,7 @@ import useSWR from "swr";
 import { Post } from "@prisma/client";
 
 interface PostDetailResponse {
-  ok: Boolean;
+  ok: boolean;
   post: Post;
 }
 
