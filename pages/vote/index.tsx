@@ -22,25 +22,27 @@ const Chats: NextPage = () => {
       <Head>
         <title>vote</title>
       </Head>
-      <section className={"divide-y grid grid-col-1 space-y-3 w-full mt-7"}>
+      <section className={"divide-y flex flex-col justify-itmes-center w-full mt-7"}>
         {data?.votes?.map((vote) => (
-          <Link
-            key={vote.voteId}
-            id={vote.voteId.toString()}
-            href={`/vote/${vote.voteId}`}
-            legacyBehavior
-          >
-            <a className="flex cursor-pointer flex-col pt-4 items-start border-2 rounded-3xl mx-2 bg-zinc-200">
-              <h1 className="px-4 text-4xl w-full font-bold text-zinc-700">
-                {vote.title.length < 13 ? vote.title : vote.title.substring(0, 10) + "..."}
-              </h1>
-              <div className="mt-3 mb-1 px-4 text-zinc-500 w-full grid justify-items-stretch">
-                <span className="justify-self-end">{`${vote.startAt
-                  .toString()
-                  .substring(0, 10)} 부터 ${vote.finishAt.toString().substring(0, 10)} 까지`}</span>
-              </div>
-            </a>
-          </Link>
+          <div>
+            <Link
+              key={vote.voteId}
+              id={vote.voteId.toString()}
+              href={`/vote/${vote.voteId}`}
+              legacyBehavior
+            >
+              <a className="flex my-3 cursor-pointer transition-colors hover:bg-pantone border-4 hover:border-4 hover:border-pantone-light flex-col items-start rounded-2xl mx-2 bg-pantone-light">
+                <h1 className="my-2 px-4 text-3xl w-full font-semibold text-neutral-600 transition-colors hover:text-neutral-200">
+                  {vote.title.length < 13 ? vote.title : vote.title.substring(0, 10) + "..."}
+                </h1>
+                <div className="mt-1 mb-2 px-4 text-neutral-600 flex justify-items-end transition-colors hover:text-neutral-200">
+                  <span className="justify-self-end">{`${vote.startAt
+                    .toString()
+                    .substring(0, 10)} ~ ${vote.finishAt.toString().substring(0, 10)}`}</span>
+                </div>
+              </a>
+            </Link>
+          </div>
         ))}
       </section>
     </Layout>
