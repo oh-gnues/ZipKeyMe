@@ -26,7 +26,15 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     res.json({ ok: true, vote });
   }
   if (req.method == "GET") {
-    const votes = await client.vote.findMany({});
+    const current = new Date();
+    const votes = await client.vote.findMany({
+      orderBy: {
+        finishAt: "asc",
+      },
+      where: {
+        AND: [{ startAt: { lte: current } }, { finishAt: { gte: current } }],
+      },
+    });
     res.json({ ok: true, votes });
   }
 }
