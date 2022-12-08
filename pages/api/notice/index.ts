@@ -6,6 +6,9 @@ import { withSession } from "@libs/server/withSession";
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method == "GET") {
     const notices = await client.post.findMany({
+      orderBy: {
+        postAt: "desc",
+      },
       where: {
         isNotice: true,
       },

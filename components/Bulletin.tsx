@@ -11,6 +11,7 @@ interface BulletinProps {
   hearts?: number;
   isNotice: boolean;
   writer: string;
+  inAdmin?: boolean;
 }
 
 export default function Bulletin({
@@ -23,10 +24,19 @@ export default function Bulletin({
   userId,
   isNotice,
   writer,
+  inAdmin,
 }: BulletinProps) {
   return (
     <Link
-      href={isNotice ? `/notice/${id}` : `/bulletins/${id}`}
+      href={
+        inAdmin
+          ? isNotice
+            ? `/admin/notice/${id}`
+            : `/admin/bulletins/${id}`
+          : isNotice
+          ? `/notice/${id}`
+          : `/bulletins/${id}`
+      }
       legacyBehavior
     >
       <a className={"flex cursor-pointer flex-col pt-4 items-start"}>

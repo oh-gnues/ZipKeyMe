@@ -18,7 +18,7 @@ interface WriteNoticeForm {
 
 interface WritePostMutation {
   ok: boolean;
-  post: Post;
+  notice: Post;
 }
 
 const Write: NextPage = () => {
@@ -27,7 +27,7 @@ const Write: NextPage = () => {
       isNotice: true,
     },
   });
-  const [writePost, { loading, data }] = useMutation<WritePostMutation>(`/api/bulletins`);
+  const [writePost, { loading, data }] = useMutation<WritePostMutation>(`/api/notice`);
   const onValid = (data: WriteNoticeForm) => {
     if (loading) return;
     writePost(data);
@@ -35,7 +35,7 @@ const Write: NextPage = () => {
 
   useEffect(() => {
     if (data?.ok) {
-      router.push(`/notice/${data.post.postId}`);
+      router.push(`/admin/notice`);
     }
   }, [data, router]);
 

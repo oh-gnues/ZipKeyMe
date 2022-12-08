@@ -5,24 +5,23 @@ import { useRouter } from "next/dist/client/router";
 import useSWR from "swr";
 import { Post } from "@prisma/client";
 
-interface PostDetailResponse {
-  ok: boolean;
-  post: Post;
+interface NoticeDetailResponse {
+  ok: Boolean;
+  notice: Post;
 }
 
 const NoticeDetail: NextPage = () => {
   const router = useRouter();
-  const { data } = useSWR<PostDetailResponse>(
+  const { data } = useSWR<NoticeDetailResponse>(
     router.query.id ? `/api/notice/${router.query.id}` : null
   );
   return (
     <Layout
       title={"공지"}
-      hasTabBar
       canGoBack
     >
       <Head>
-        <title>{data?.post?.title}</title>
+        <title>{data?.notice?.title}</title>
       </Head>
 
       {/* 유저 프로필 */}
@@ -47,15 +46,17 @@ const NoticeDetail: NextPage = () => {
           </div>
           <div>
             <p className={"text-sm font-bold text-gray-700"}>아파트 관리사무소</p>
-            <p className={"text-xs text-gray-500"}>{("" + data?.post?.postAt).substring(0, 10)}</p>
+            <p className={"text-xs text-gray-500"}>
+              {("" + data?.notice?.postAt).substring(0, 10)}
+            </p>
           </div>
         </div>
       </section>
 
       {/* 게시글 내용 */}
       <section className={"border-b-2 pb-20 px-4"}>
-        <p className={"my-2 text-2xl font-bold"}>{data?.post?.title}</p>
-        <p className={"text-gray-800 leading-relaxed"}>{data?.post?.content}</p>
+        <p className={"my-2 text-2xl font-bold"}>{data?.notice?.title}</p>
+        <p className={"text-gray-800 leading-relaxed"}>{data?.notice?.content}</p>
       </section>
     </Layout>
   );

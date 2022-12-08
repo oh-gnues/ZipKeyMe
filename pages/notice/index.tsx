@@ -5,24 +5,25 @@ import Bulletin from "@components/Bulletin";
 import useSWR from "swr";
 import { Post } from "@prisma/client";
 
-interface PostsResponse {
+interface NoticesResponse {
   ok: boolean;
-  posts: Post[];
+  notices: Post[];
 }
 
 const Notice: NextPage = () => {
-  const { data } = useSWR<PostsResponse>("/api/notice");
+  const { data } = useSWR<NoticesResponse>("/api/notice");
+  console.log(data);
   return (
     <Layout
       title={"공지"}
       canGoBack
-      hasTabBar
+      alarmBtnDisable
     >
       <Head>
         <title>Notices</title>
       </Head>
       <section className={"divide-y"}>
-        {data?.posts?.map((post) => (
+        {data?.notices?.map((post) => (
           <Bulletin
             key={post.postId}
             id={post.postId}
@@ -33,7 +34,7 @@ const Notice: NextPage = () => {
             createdAt={("" + post.postAt).substring(0, 10)}
             userId={"공지"}
             writer={"아파트 관리사무소"}
-            isNotice={post.isNotice}
+            isNotice
           />
         ))}
       </section>
