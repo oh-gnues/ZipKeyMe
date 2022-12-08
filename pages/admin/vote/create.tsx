@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { Switch } from "@mui/material";
-import { useRouter } from "next/router";
+import { useRouter } from "next/dist/client/router";
 import { useEffect, useState } from "react";
 import { FieldErrors, useFieldArray, useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";

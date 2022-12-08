@@ -4,7 +4,7 @@ import Head from "next/head";
 import useMutation from "@libs/client/useMutation";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/dist/client/router";
 
 interface modifyForm {
   target: string;

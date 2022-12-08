@@ -5,7 +5,7 @@ import Link from "next/link";
 import useUser from "@libs/client/useUser";
 import { Switch } from "@mui/material";
 import { useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/dist/client/router";
 import { METHODS } from "http";
 import { json } from "stream/consumers";
 
