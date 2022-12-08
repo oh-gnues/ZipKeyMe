@@ -3,7 +3,6 @@ import Layout from "@components/Layout";
 import Head from "next/head";
 import useSWR from "swr";
 import { Vote } from "@prisma/client";
-import getDate from "@libs/client/getDate";
 import Link from "next/link";
 
 interface votesResponse {

@@ -4,11 +4,12 @@ import client from "@libs/server/client";
 import { withSession } from "@libs/server/withSession";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const {
-    query: { id },
-    session: { user },
-  } = req;
   if (req.method == "GET") {
+    //투표불러오기
+    const {
+      query: { id },
+      session: { user },
+    } = req;
     const vote = await client.vote.findFirst({
       where: {
         voteId: +id!,
@@ -24,6 +25,39 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       },
     });
     return res.json({ ok: true, vote, voteHistory });
+  }
+  if (req.method == "POST") {
+    //투표하기
+    const {
+      body: { candId },
+      query: { id },
+      session: { user },
+    } = req;
+    await client.userVote.upsert({
+      //where조건에 만족하는 record가 없으면 create, 있으면 update
+      where: {
+        voteId_id: {
+          voteId: +id!,
+          id: user!.account,
+        },
+      },
+      update: {
+        //재투표
+        candId,
+      },
+      create: {
+        //첫투표
+        vote: {
+          connect: { voteId: +id! },
+        },
+        user: {
+          connect: { id: user?.account },
+        },
+        candidate: {
+          connect: { candId },
+        },
+      },
+    });
   }
 }
 
