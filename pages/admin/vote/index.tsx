@@ -17,8 +17,8 @@ const Chats: NextPage = () => {
   return (
     <Layout
       title={"투표 관리"}
-      hasTabBar
       canGoBack
+      alarmBtnDisable
     >
       <Head>
         <title>vote</title>

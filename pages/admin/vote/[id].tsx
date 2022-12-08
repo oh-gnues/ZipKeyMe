@@ -34,7 +34,6 @@ const NoticeDetail: NextPage = () => {
   return (
     <Layout
       title={"투표 현황"}
-      hasTabBar
       canGoBack
       alarmBtnDisable
     >
