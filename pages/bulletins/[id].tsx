@@ -273,6 +273,7 @@ const BulletinDetail: NextPage = () => {
           </button>
         </form>
       </section>
+
     </Layout>
   );
 };

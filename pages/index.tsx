@@ -13,10 +13,22 @@ import Complaint from "public/complaint.svg";
 import Notice from "public/notice.svg";
 import useUser from "@libs/client/useUser";
 import Link from "next/link";
+import { useEffect, useState } from 'react';
 
 const Home: NextPage = () => {
   // 로그인 되어 있지 않으면 로그인페이지로 리다이렉션
   const { user, isLoading } = useUser();
+  const [admin,isAdmin]  = useState<boolean>(false);
+
+  // console.log(admin)
+
+  // useEffect(()=>{
+  //   if(user?.name === "김승호"){
+  //     isAdmin(true);
+  //   }
+  // },[user])
+
+
   return (
     <Layout hasTabBar>
       <Head>
@@ -113,6 +125,7 @@ const Home: NextPage = () => {
             </MainButton>
           </Link>
         </div>
+     
       </section>
     </Layout>
   );

@@ -48,7 +48,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     
     const chatting = await client.chatting.create({
       data: {
-        chatId: +chattingRoom?.chatId!,
+        chatId: chattingRoom?.chatId!,
         sender: req.session.user?.account!,
         msg,
       }

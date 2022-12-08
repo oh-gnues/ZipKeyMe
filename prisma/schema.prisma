@@ -140,7 +140,8 @@ model Reple {
 }
 
 model Likes {
-  postId Int      @id
+  index  Int      @id @default(autoincrement())
+  postId Int
   id     String
   likeAt DateTime @default(now())
   post   Post     @relation(references: [postId], fields: [postId], onDelete: Cascade, onUpdate: Cascade)
@@ -215,7 +216,8 @@ model Chatting {
 // 3. 관계 스키마
 // 3-1. 입주민 - 투표 관계
 model UserVote {
-  voteId    Int       @id
+  index     Int       @id @default(autoincrement())
+  voteId    Int
   id        String
   candId    Int
   candidate Candidate @relation(references: [candId], fields: [candId], onDelete: Cascade, onUpdate: Cascade)
