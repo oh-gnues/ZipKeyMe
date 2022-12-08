@@ -7,8 +7,7 @@ import { Candidate, UserVote } from "@prisma/client";
 import { FieldErrors, useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
 import Button from "@components/Button";
-import { cls } from "@libs/client/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Vote = {
   voteId: number;
@@ -35,15 +34,29 @@ const NoticeDetail: NextPage = () => {
     router.query.id ? `/api/vote/${router.query.id}` : null
   );
   const [vote] = useMutation(`/api/vote/${data?.vote.voteId}`);
-  const { register, handleSubmit } = useForm<VoteForm>();
+  const { register, handleSubmit } = useForm<VoteForm>({
+    defaultValues: {
+      candId: 2,
+    },
+  });
   const [voted, setVoted] = useState(false);
   const onValid = (validForm: VoteForm) => {
-    console.log(validForm);
+    vote(validForm);
     setVoted(true);
   };
   const onInValid = (errors: FieldErrors) => {
     console.log(errors);
   };
+  useEffect(() => {
+    if (!data) return;
+    if (data.voteHistory) {
+      setVoted(Boolean(data.voteHistory));
+      const checkedBtn = document.getElementById(
+        data.voteHistory.candId.toString()
+      ) as HTMLInputElement | null;
+      if (checkedBtn) checkedBtn.checked = true;
+    }
+  }, [data]);
 
   return (
     <Layout
@@ -63,7 +76,8 @@ const NoticeDetail: NextPage = () => {
             <div className="flex flex-row items-center space-x-6">
               <p className={"text-xs text-gray-500"}>{`${data?.vote.startAt
                 .toString()
-                .substring(0, 10)} ~ ${data?.vote.finishAt.toString().substring(0, 10)}`}</p>
+                .substring(0, 10)} ~ 
+                ${data?.vote.finishAt.toString().substring(0, 10)}`}</p>
               <p className={"text-xs text-red-500"}>
                 {data?.vote.reChoice ? "재투표 가능" : "재투표 불가"}
               </p>
@@ -89,6 +103,7 @@ const NoticeDetail: NextPage = () => {
                   className={"peer hidden"}
                   type="radio"
                   value={candidate.candId}
+                  checked={undefined}
                   {...register("candId", {
                     required: true,
                   })}

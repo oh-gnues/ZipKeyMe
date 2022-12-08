@@ -43,7 +43,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       },
       update: {
         //재투표
-        candId,
+        candId: +candId,
       },
       create: {
         //첫투표
@@ -54,7 +54,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           connect: { id: user?.account },
         },
         candidate: {
-          connect: { candId },
+          connect: { candId: +candId },
         },
       },
     });
