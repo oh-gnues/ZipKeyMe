@@ -200,14 +200,15 @@ model ChattingRoom {
 }
 
 model Chatting {
-  chatId       Int          @id
+  chattingId   Int          @id @default(autoincrement())
+  chatId       Int
   sender       String
   msg          String
   sendAt       DateTime     @default(now())
   isRead       Boolean      @default(false)
   chattingRoom ChattingRoom @relation(references: [chatId], fields: [chatId], onDelete: Cascade, onUpdate: Cascade)
 
-  @@index([chatId])
+  @@index([chattingId])
 }
 
 //--------------------------------------------------
