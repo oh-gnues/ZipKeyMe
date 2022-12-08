@@ -16,7 +16,7 @@ const Chats: NextPage = () => {
   console.log(data);
   return (
     <Layout
-      title={"투표관리"}
+      title={"투표 관리"}
       hasTabBar
       canGoBack
     >
