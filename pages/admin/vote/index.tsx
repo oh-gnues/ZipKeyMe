@@ -29,7 +29,7 @@ const Chats: NextPage = () => {
             <Link
               key={vote.voteId}
               id={vote.voteId.toString()}
-              href={`/vote/${vote.voteId}`}
+              href={`/admin/vote/${vote.voteId}`}
               legacyBehavior
             >
               <a className="flex my-3 cursor-pointer transition-colors hover:bg-pantone border-4 hover:border-4 hover:border-pantone-light flex-col items-start rounded-2xl mx-2 bg-pantone-light">

@@ -9,18 +9,27 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const {
       query: { id },
     } = req;
-    const vote = await client.vote.findFirst({
+
+    const vote = await client.vote.findUnique({
       where: {
         voteId: +id!,
       },
       include: {
-        candidates: true,
+        candidates: {
+          select: {
+            candId: true,
+            name: true,
+            _count: {
+              select: { UserVote: true },
+            },
+          },
+          orderBy: {},
+        },
       },
     });
-    return res.json({ ok: true, vote });
+    res.json({ ok: true, vote });
   }
 }
-
 export default withSession(
   apiHandler({
     method: ["GET"],
