@@ -6,20 +6,15 @@ import { withSession } from "@libs/server/withSession";
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method == "POST") {
     const { candidates, title, startAt, finishAt, reChoice } = req.body;
-    let candidatesInput: { name: string }[] = [];
-    candidates.forEach((candi: { name: string }) => {
-      candidatesInput.push(candi);
-    });
-
     const vote = await client.vote.create({
       data: {
         title,
-        startAt: startAt + "T00:00:00.000Z",
-        finishAt: finishAt + "T00:00:00.000Z",
+        startAt: new Date(startAt),
+        finishAt: new Date(finishAt),
         reChoice,
         candidates: {
           createMany: {
-            data: candidatesInput,
+            data: candidates,
           },
         },
       },
@@ -29,6 +24,18 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     });
     console.log(vote);
     res.json({ ok: true, vote });
+  }
+  if (req.method == "GET") {
+    const current = new Date();
+    const votes = await client.vote.findMany({
+      orderBy: {
+        finishAt: "asc",
+      },
+      where: {
+        AND: [{ startAt: { lte: current } }, { finishAt: { gte: current } }],
+      },
+    });
+    res.json({ ok: true, votes });
   }
 }
 
