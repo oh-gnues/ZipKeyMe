@@ -140,7 +140,8 @@ model Reple {
 }
 
 model Likes {
-  postId Int      @id
+  index  Int      @id @default(autoincrement())
+  postId Int
   id     String
   likeAt DateTime @default(now())
   post   Post     @relation(references: [postId], fields: [postId], onDelete: Cascade, onUpdate: Cascade)
@@ -200,21 +201,23 @@ model ChattingRoom {
 }
 
 model Chatting {
-  chatId       Int          @id
+  chattingId   Int          @id @default(autoincrement())
+  chatId       Int
   sender       String
   msg          String
   sendAt       DateTime     @default(now())
   isRead       Boolean      @default(false)
   chattingRoom ChattingRoom @relation(references: [chatId], fields: [chatId], onDelete: Cascade, onUpdate: Cascade)
 
-  @@index([chatId])
+  @@index([chattingId])
 }
 
 //--------------------------------------------------
 // 3. 관계 스키마
 // 3-1. 입주민 - 투표 관계
 model UserVote {
-  voteId    Int       @id
+  index     Int       @id @default(autoincrement())
+  voteId    Int
   id        String
   candId    Int
   candidate Candidate @relation(references: [candId], fields: [candId], onDelete: Cascade, onUpdate: Cascade)
