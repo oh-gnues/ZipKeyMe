@@ -8,7 +8,7 @@ import {useForm, UseFormRegisterReturn} from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
 import {Complaint} from "@prisma/client";
 import {useEffect, useState, Fragment} from "react";
-import {router} from "next/client";
+import {useRouter} from "next/dist/client/router";
 import { Listbox, Transition } from '@headlessui/react';
 import {CheckIcon, ChevronUpDownIcon} from '@heroicons/react/20/solid';
 
@@ -35,6 +35,7 @@ const categories = [
 ]
 
 const Write: NextPage = () => {
+	const router = useRouter();
 	const {register, handleSubmit} = useForm<WriteComplaintForm>();
 	const [writeComplaint, {loading, data}] = useMutation<WriteComplaintMutation>(`/api/complaint`);
 	const onValid = (data: WriteComplaintForm) => {

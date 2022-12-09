@@ -8,7 +8,7 @@ import {useForm} from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
 import {Post} from "@prisma/client";
 import {useEffect} from "react";
-import {router} from "next/client";
+import {useRouter} from "next/dist/client/router";
 
 interface WritePostForm {
 	title: string;
@@ -21,6 +21,7 @@ interface WritePostMutation {
 }
 
 const Write: NextPage = () => {
+	const router = useRouter();
 	const {register, handleSubmit} = useForm<WritePostForm>();
 	const [writePost, {loading, data}] = useMutation<WritePostMutation>(`/api/bulletins`);
 	const onValid = (data: WritePostForm) => {
