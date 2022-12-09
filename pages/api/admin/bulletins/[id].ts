@@ -7,23 +7,33 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const {
     query: { id },
   } = req;
-  const complaint = await client.complaint.findUnique({
+  const post = await client.post.findUnique({
     where: {
-      comId: +id!,
+      postId: +id!,
     },
     include: {
+      reples: {
+        include: {
+          users: {
+            select: { name: true },
+          },
+        },
+      },
       users: {
         select: { name: true },
       },
+      _count: {
+        select: { likes: true, reples: true },
+      },
     },
   });
-  return res.json({ ok: true, complaint });
+  return res.json({ ok: true, post });
 }
 
 export default withSession(
   apiHandler({
     method: ["GET"],
     handler,
-    isPrivate: true,
+    isPrivate: false,
   })
 );

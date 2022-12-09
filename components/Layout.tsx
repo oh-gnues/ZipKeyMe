@@ -62,15 +62,13 @@ export default function Layout({
         ) : null}
 
         {title ? (
-          <span className={cls(canGoBack ? "mx-2" : "", "text-xl font-bold")}>
-            {title}
-          </span>
+          <span className={cls(canGoBack ? "mx-2" : "", "text-xl font-bold")}>{title}</span>
         ) : null}
 
         {alarmBtnDisable ? null : (
           <Link
             className={"absolute right-3"}
-            href={"/profile/notification/"}
+            href={"/notification/"}
           >
             <svg
               width="25"
