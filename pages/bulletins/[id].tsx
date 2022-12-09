@@ -69,7 +69,7 @@ const BulletinDetail: NextPage = () => {
     formState: { isSubmitting },
   } = useForm<RepleForm>();
 
-  console.log(mutateState);
+
 
   const onValid = (validForm: RepleForm) => {
     postReple(validForm);
@@ -273,6 +273,7 @@ const BulletinDetail: NextPage = () => {
           </button>
         </form>
       </section>
+
     </Layout>
   );
 };
