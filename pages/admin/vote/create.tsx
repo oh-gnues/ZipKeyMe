@@ -61,7 +61,6 @@ const Enter: NextPage = () => {
     <Layout
       title={"투표 개설"}
       canGoBack
-      hasTabBar
       alarmBtnDisable
     >
       <Head>

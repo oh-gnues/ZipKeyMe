@@ -33,6 +33,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       query: { id },
       session: { user },
     } = req;
+    console.log(user);
     await client.userVote.upsert({
       //where조건에 만족하는 record가 없으면 create, 있으면 update
       where: {

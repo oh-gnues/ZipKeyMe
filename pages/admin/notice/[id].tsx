@@ -18,7 +18,6 @@ const NoticeDetail: NextPage = () => {
   return (
     <Layout
       title={"공지"}
-      hasTabBar
       canGoBack
     >
       <Head>

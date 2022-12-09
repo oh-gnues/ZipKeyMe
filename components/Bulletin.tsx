@@ -7,16 +7,36 @@ interface BulletinProps {
   content: string;
   createdAt: string;
   userId: string; // id of the user
-  comments: number;
-  hearts: number;
+  comments?: number;
+  hearts?: number;
   isNotice: boolean;
   writer: string;
+  inAdmin?: boolean;
 }
 
-export default function Bulletin({ id, title, content, createdAt, comments, hearts, userId, isNotice, writer }: BulletinProps) {
+export default function Bulletin({
+  id,
+  title,
+  content,
+  createdAt,
+  comments,
+  hearts,
+  userId,
+  isNotice,
+  writer,
+  inAdmin,
+}: BulletinProps) {
   return (
     <Link
-      href={isNotice ? `/notice/${id}` : `/bulletins/${id}`}
+      href={
+        inAdmin
+          ? isNotice
+            ? `/admin/notice/${id}`
+            : `/admin/bulletins/${id}`
+          : isNotice
+          ? `/notice/${id}`
+          : `/bulletins/${id}`
+      }
       legacyBehavior
     >
       <a className={"flex cursor-pointer flex-col pt-4 items-start"}>
@@ -24,7 +44,9 @@ export default function Bulletin({ id, title, content, createdAt, comments, hear
         <div className={"px-4"}>{title}</div>
 
         {/* 게시글 내용 (간단히) */}
-        <span className={"flex items-center mt-2 px-4 py-1 text-xs font-medium text-gray-400"}>{content}</span>
+        <span className={"flex items-center mt-2 px-4 py-1 text-xs font-medium text-gray-400"}>
+          {content}
+        </span>
 
         {/* 날짜 및 작성자 */}
         <div className={"px-4 flex items-center w-full font-medium text-xs my-2.5"}>
