@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
+const withPlugins = require('next-compose-plugins');
+const withPWA = require('next-pwa')({
+  dest: 'public'
+})
+
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true
+  },
   reactStrictMode: true,
   swcMinify: true,
   webpack: config => {
@@ -12,4 +20,4 @@ const nextConfig = {
   }
 }
 
-module.exports = nextConfig
+module.exports = withPlugins([withPWA], nextConfig);
