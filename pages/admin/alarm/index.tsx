@@ -10,32 +10,27 @@ import { Post } from "@prisma/client";
 import { useEffect } from "react";
 import { router } from "next/client";
 
-interface WriteNoticeForm {
+interface sendAlarmForm {
   title: string;
   content: string;
-  isNotice: boolean;
 }
 
-interface WritePostMutation {
+interface sendAlarmMutation {
   ok: boolean;
-  notice: Post;
 }
 
 const Write: NextPage = () => {
-  const { register, handleSubmit } = useForm<WriteNoticeForm>({
-    defaultValues: {
-      isNotice: true,
-    },
-  });
-  const [writePost, { loading, data }] = useMutation<WritePostMutation>(`/api/notice`);
-  const onValid = (data: WriteNoticeForm) => {
+  const { register, handleSubmit } = useForm<sendAlarmForm>();
+  const [sendAlarm, { loading, data }] = useMutation<sendAlarmMutation>(`/api/alert`);
+  const onValid = (data: sendAlarmForm) => {
     if (loading) return;
-    writePost(data);
+    sendAlarm(data);
   };
 
   useEffect(() => {
     if (data?.ok) {
-      router.push(`/admin/notice`);
+      console.log(data);
+      router.push(`/admin`);
     }
   }, [data, router]);
 
