@@ -31,7 +31,6 @@ model User {
   likes         Likes[]
   posts         Post[]
   reples        Reple[]
-  alarms        Alarm[]
   complaints    Complaint[]
   chattingRooms ChattingRoom[]
   userVotes     UserVote[]
@@ -247,14 +246,9 @@ model PostFile {
 // 4-1. 알림
 model Alarm {
   alertId Int      @id @default(autoincrement())
-  id      String
-  type    Types
-  isRead  Boolean  @default(false)
+  title   String
   content String
   alertAt DateTime @default(now())
-  user    User     @relation(references: [id], fields: [id], onDelete: Cascade, onUpdate: Cascade)
-
-  @@index([id])
 }
 
 // 4-2. 파일
@@ -285,14 +279,6 @@ enum States {
   YET
   ING
   DONE
-}
-
-// 5-3. 알람 유형 [댓글, 공지, 채팅, 민원처리]
-enum Types {
-  REPLE_ALARM
-  NOTICE_ALARM
-  CHAT_ALARM
-  COM_ALARM
 }
 
 // 5-4. 성별 [남성, 여성]
