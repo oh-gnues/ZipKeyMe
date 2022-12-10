@@ -10,10 +10,21 @@ interface AlarmPost {
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method == "GET") {
-    const alarms = await client.alarm.findMany({
-      orderBy: { alertAt: "desc" },
+    const { user } = req.session;
+    const userSignUpDate = await client.user.findUnique({
+      where: { id: user?.account },
+      select: { signUpAt: true },
     });
-    res.json({ ok: true, alarms });
+    if (userSignUpDate === null) res.json({ ok: false });
+    else {
+      const alarms = await client.alarm.findMany({
+        where: {
+          alertAt: { gte: userSignUpDate.signUpAt },
+        },
+        orderBy: { alertAt: "desc" },
+      });
+      res.json({ ok: true, alarms });
+    }
   }
 
   if (req.method == "POST") {

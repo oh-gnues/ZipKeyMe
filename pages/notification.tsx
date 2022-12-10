@@ -9,6 +9,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { Alarm } from "@prisma/client";
+import useUser from "@libs/client/useUser";
 
 interface AlarmResponse {
   ok: boolean;
@@ -18,11 +19,12 @@ interface AlarmResponse {
 const Home: NextPage = () => {
   const [expanded, setExpanded] = useState<string | false>(false);
   const [loading, setLoading] = useState<true | false>(true);
+  const { user } = useUser();
 
   const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
     setExpanded(isExpanded ? panel : false);
   };
-  const { data } = useSWR<AlarmResponse>("/api/alert");
+  const { data } = useSWR<AlarmResponse>(`/api/alert/${user.id}`);
   useEffect(() => {
     if (data) setLoading(false);
   }, [data]);
