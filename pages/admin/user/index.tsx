@@ -92,14 +92,27 @@ const Home: NextPage = () => {
             >
               <Typography
                 variant="h6"
-                sx={{ width: "50%", flexShrink: 0 }}
+                sx={{ width: "45%", flexShrink: 0 }}
               >
                 {house.aptDong + "동 " + house.aptHo + "호"}
               </Typography>
-              <Typography sx={{ color: "text.secondary" }}>{"전입일 :"}</Typography>
-              <Typography sx={{ color: "text.secondary" }}>
-                {house.moveInAt.toString().substring(0, 10)}
+              <Typography
+                alignSelf={"center"}
+                sx={{ color: "text.secondary" }}
+              >
+                {`전입일: ${house.moveInAt.toString().substring(0, 10)}`}
               </Typography>
+              {house.users.some((user) => !user.isAccept) ? (
+                <Typography
+                  ml={3}
+                  alignSelf={"center"}
+                  variant="caption"
+                  align="right"
+                  sx={{ color: "red" }}
+                >
+                  {"●"}
+                </Typography>
+              ) : null}
             </AccordionSummary>
             <AccordionDetails>
               <Typography variant="subtitle1">{"세대주 : " + house.holder}</Typography>
@@ -120,9 +133,23 @@ const Home: NextPage = () => {
                     >
                       {user.name}
                     </Typography>
-                    <Typography sx={{ color: "text.secondary" }}>
+                    <Typography
+                      alignSelf={"center"}
+                      sx={{ color: "text.secondary" }}
+                    >
                       {user.gender === "MALE" ? "남" : "여"}
                     </Typography>
+                    {user.isAccept ? null : (
+                      <Typography
+                        ml={3}
+                        alignSelf={"center"}
+                        variant="caption"
+                        align="right"
+                        sx={{ color: "red" }}
+                      >
+                        {"●"}
+                      </Typography>
+                    )}
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography variant="subtitle1">{"전화번호"}</Typography>
@@ -150,7 +177,7 @@ const Home: NextPage = () => {
                     <Button
                       onClick={(e) => clickAcceptBtn(e)}
                       variant="contained"
-                      color="error"
+                      color="info"
                       size="large"
                       disabled={user.isAccept}
                       id={user.id}

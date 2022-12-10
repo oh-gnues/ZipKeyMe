@@ -109,7 +109,7 @@ const Home: NextPage = () => {
                   align="right"
                   sx={{ color: "red" }}
                 >
-                  {"승인필요"}
+                  {"●"}
                 </Typography>
               ) : null}
             </AccordionSummary>
@@ -150,7 +150,7 @@ const Home: NextPage = () => {
                             align="right"
                             sx={{ color: "red" }}
                           >
-                            {"승인필요"}
+                            {"●"}
                           </Typography>
                         )}
                       </AccordionSummary>
