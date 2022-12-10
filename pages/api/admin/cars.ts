@@ -5,21 +5,34 @@ import { withSession } from "@libs/server/withSession";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method == "GET") {
-    const car = await client.car.findMany({
-      orderBy: {
-        enrollAt: "desc",
+    const users = await client.household.findMany({
+      select: {
+        houseId: true,
+        aptDong: true,
+        aptHo: true,
+        holder: true,
+        cars: {
+          select: {
+            number: true,
+            carName: true,
+            owner: true,
+            ownerPhone: true,
+            enrollAt: true,
+            applyAt: true,
+            isAccept: true,
+            isGuest: true,
+          },
+        },
       },
     });
-    return res.json({ ok: true, car });
+    return res.json({ ok: true, users });
   }
 
   if (req.method == "POST") {
-    const { karNumber: number } = req.body;
+    const { number } = req.body;
     await client.car.update({
       where: { number },
-      data: {
-        isAccept: true,
-      },
+      data: { isAccept: true },
     });
     return res.json({ ok: true });
   }
