@@ -5,25 +5,26 @@ import { withSession } from "@libs/server/withSession";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const {
+    body: { state },
     query: { id },
   } = req;
-  const complaint = await client.complaint.findUnique({
+  console.log(state);
+  const complaint = await client.complaint.update({
     where: {
       comId: +id!,
     },
-    include: {
-      users: {
-        select: { name: true },
-      },
+    data: {
+      state: state,
     },
   });
+  console.log(complaint);
   return res.json({ ok: true, complaint });
 }
 
 export default withSession(
   apiHandler({
-    method: ["GET"],
+    method: ["POST"],
     handler,
-    isPrivate: true,
+    isPrivate: false,
   })
 );
