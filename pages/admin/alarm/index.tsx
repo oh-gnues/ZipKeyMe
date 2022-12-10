@@ -6,6 +6,7 @@ import TextArea from "@components/Textarea";
 import Input from "@components/Input";
 import { useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
+import { Post } from "@prisma/client";
 import { useEffect } from "react";
 import { router } from "next/client";
 

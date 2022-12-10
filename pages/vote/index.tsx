@@ -30,11 +30,11 @@ const Chats: NextPage = () => {
               href={`/vote/${vote.voteId}`}
               legacyBehavior
             >
-              <a className="flex my-3 cursor-pointer transition-colors hover:bg-pantone-light border-4 hover:border-4 hover:border-pantone-light flex-col items-start rounded-2xl mx-2 bg-pantone">
-                <h1 className="my-2 px-4 text-3xl w-full font-semibold text-gray-100 transition-colors hover:text-neutral-200">
+              <a className="flex my-3 cursor-pointer transition-colors hover:bg-pantone border-4 hover:border-4 hover:border-pantone-light flex-col items-start rounded-2xl mx-2 bg-pantone-light">
+                <h1 className="my-2 px-4 text-3xl w-full font-semibold text-neutral-600 transition-colors hover:text-neutral-200">
                   {vote.title.length < 13 ? vote.title : vote.title.substring(0, 10) + "..."}
                 </h1>
-                <div className="mt-1 mb-2 px-4 text-gray-100 flex justify-items-end transition-colors hover:text-neutral-200">
+                <div className="mt-1 mb-2 px-4 text-neutral-600 flex justify-items-end transition-colors hover:text-neutral-200">
                   <span className="justify-self-end">{`${vote.startAt
                     .toString()
                     .substring(0, 10)} ~ ${vote.finishAt.toString().substring(0, 10)}`}</span>

@@ -25,7 +25,7 @@ model User {
   birth         DateTime
   pushAgree     Boolean        @default(true)
   isAccept      Boolean        @default(false)
-  signUpAt      DateTime       @default(now())
+  acceptAt      DateTime?
   houseId       Int
   household     Household      @relation(references: [houseId], fields: [houseId])
   likes         Likes[]

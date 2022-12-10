@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
 import { Post } from "@prisma/client";
 import { useEffect } from "react";
-import { router } from "next/client";
+import {useRouter} from "next/dist/client/router";
 
 interface WriteNoticeForm {
   title: string;
@@ -22,6 +22,8 @@ interface WritePostMutation {
 }
 
 const Write: NextPage = () => {
+  const router = useRouter();
+
   const { register, handleSubmit } = useForm<WriteNoticeForm>({
     defaultValues: {
       isNotice: true,

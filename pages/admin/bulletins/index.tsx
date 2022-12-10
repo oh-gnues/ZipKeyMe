@@ -27,7 +27,7 @@ interface PostsResponse {
 }
 
 const Bulletins: NextPage = () => {
-  const { data } = useSWR<PostsResponse>("/api/admin/bulletins");
+  const { data } = useSWR<PostsResponse>("/api/bulletins");
   return (
     <Layout
       title={"게시판"}

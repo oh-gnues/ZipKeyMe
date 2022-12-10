@@ -40,14 +40,23 @@ type Post = {
 
 interface PostDetailResponse {
   ok: Boolean;
+  isLiked: Boolean;
   post: Post;
+}
+interface RepleResponse {
+  ok: Boolean;
+  reple: Reple;
+}
+
+interface RepleForm {
+  content: string;
 }
 
 const BulletinDetail: NextPage = () => {
   const router = useRouter();
   const postId = router.query.id;
   const { data, mutate } = useSWR<PostDetailResponse>(
-    router.query.id ? `/api/admin/bulletins/${postId}` : null
+    router.query.id ? `/api/bulletins/${postId}` : null
   );
   return (
     <Layout
@@ -90,20 +99,6 @@ const BulletinDetail: NextPage = () => {
       <section className={"relative border-b-2 pb-20 px-4"}>
         <p className={"my-2 text-2xl font-bold"}>{data?.post?.title}</p>
         <p className={"text-gray-800 leading-relaxed"}>{data?.post?.content}</p>
-        <div
-          className={
-            "absolute w-full bottom-3 grid justify-items-center text-red-600 hover:text-red-400"
-          }
-        >
-          <div
-            className={
-              "border-2 py-1 px-3 text-center rounded-full text-red-600 border-rose-500 hover:text-red-400 hover:border-rose-300"
-            }
-          >
-            <FavoriteBorderRoundedIcon fontSize="large" />
-            <span className="ml-1 text-lg">{data?.post?._count.likes}</span>
-          </div>
-        </div>
       </section>
 
       {/* 댓글 */}
