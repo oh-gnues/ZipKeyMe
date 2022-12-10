@@ -74,7 +74,6 @@ const Home: NextPage = () => {
       title="주민 관리"
       canGoBack
       alarmBtnDisable
-      hasTabBar
     >
       <Head>
         <title>주민 관리</title>

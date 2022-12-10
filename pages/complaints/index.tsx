@@ -31,6 +31,7 @@ const Complaints: NextPage = () => {
     <Layout
       title={"민원"}
       canGoBack
+      hasTabBar
     >
       <Head>
         <title>민원</title>
