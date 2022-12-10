@@ -52,8 +52,7 @@ const Enter: NextPage = () => {
   useEffect(() => {
     if (data?.ok) {
       reset();
-      //   router.push(`/admin/vote/${data.vote.voteId}`);
-      console.log(data);
+      router.push(`/admin/vote`);
     }
   }, [data, router]);
 
