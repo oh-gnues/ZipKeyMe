@@ -7,7 +7,7 @@ import Input from "@components/Input";
 import { useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
 import { useEffect } from "react";
-import { router } from "next/client";
+import { useRouter } from "next/dist/client/router";
 
 interface sendAlarmForm {
   title: string;
@@ -19,6 +19,7 @@ interface sendAlarmMutation {
 }
 
 const Write: NextPage = () => {
+  const router = useRouter();
   const { register, handleSubmit } = useForm<sendAlarmForm>();
   const [sendAlarm, { loading, data }] = useMutation<sendAlarmMutation>(`/api/alert`);
   const onValid = (data: sendAlarmForm) => {
