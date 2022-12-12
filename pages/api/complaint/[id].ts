@@ -24,6 +24,6 @@ export default withSession(
   apiHandler({
     method: ["GET"],
     handler,
-    isPrivate: true,
+    isPrivate: false,
   })
 );
