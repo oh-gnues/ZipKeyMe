@@ -28,13 +28,16 @@ interface MutationResult {
 }
 
 const Register: NextPage = () => {
-  const [signUp, { loading, data, error }] =
-    useMutation<MutationResult>("/api/users/signUp");
+  const [signUp, { loading, data, error }] = useMutation<MutationResult>("/api/users/signUp");
   const {
     register,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<SignUpForm>();
+  } = useForm<SignUpForm>({
+    defaultValues: {
+      agree: true,
+    },
+  });
   const [mustAgree, setMustAgree] = useState(true);
   const [checkPassword, setCheckPassword] = useState("");
   const [failReason, setFailReason] = useState("");
@@ -107,8 +110,7 @@ const Register: NextPage = () => {
                 required: true,
                 minLength: 8,
                 maxLength: 20,
-                validate: (value) =>
-                  value === checkPassword || "비밀번호가 일치하지 않습니다.",
+                validate: (value) => value === checkPassword || "비밀번호가 일치하지 않습니다.",
               })}
             ></input>
           </p>
@@ -242,13 +244,13 @@ const Register: NextPage = () => {
             <span>[필수] 집키미 이용약관 및 개인정보처리방침 이용 동의</span>
           </label>
 
-          <label className="space-x-2">
+          {/* <label className="space-x-2">
             <input
               type="checkbox"
               {...register("agree", {})}
             />
             <span>[선택] 푸시 알람 수신 동의</span>
-          </label>
+          </label> */}
           <div className="py-4 font-bold">
             <Button
               large
@@ -269,9 +271,7 @@ const Register: NextPage = () => {
             <button
               disabled={isSubmitting}
               className="my-3 w-auto px-8 h-10 bg-pantone text-white rounded-md shadow hover:shadow-lg font-semibold"
-              onClick={() =>
-                data?.ok ? router.push("/enter") : setShowReason(false)
-              }
+              onClick={() => (data?.ok ? router.push("/enter") : setShowReason(false))}
             >
               확인
             </button>
