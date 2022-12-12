@@ -6,9 +6,8 @@ import TextArea from "@components/Textarea";
 import Input from "@components/Input";
 import { useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
-import { Post } from "@prisma/client";
 import { useEffect } from "react";
-import { useRouter } from "next/dist/client/router";
+import { router } from "next/client";
 
 interface sendAlarmForm {
   title: string;
@@ -26,7 +25,6 @@ const Write: NextPage = () => {
     if (loading) return;
     sendAlarm(data);
   };
-  const router = useRouter();
 
   useEffect(() => {
     if (data?.ok) {

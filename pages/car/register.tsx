@@ -7,7 +7,7 @@ import { Car } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
 import { useEffect } from "react";
-import { useRouter } from "next/dist/client/router";
+import { router } from "next/client";
 import Input from "@components/Input";
 import Button from "@components/Button";
 import { Switch } from "@mui/material";
@@ -28,7 +28,6 @@ interface RegisterCarMutation {
 }
 
 const RegisterCar: NextPage = () => {
-  const router = useRouter();
   const { register, handleSubmit } = useForm<RegisterCarForm>();
   const [registerCar, { loading, data }] = useMutation<RegisterCarMutation>(`/api/car`);
   const onValid = (data: RegisterCarForm) => {

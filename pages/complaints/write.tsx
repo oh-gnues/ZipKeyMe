@@ -7,8 +7,8 @@ import Input from "@components/Input";
 import { useForm, UseFormRegisterReturn } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
 import { Complaint } from "@prisma/client";
-import { useRouter } from "next/dist/client/router";
 import { useEffect, useState, Fragment } from "react";
+import { router } from "next/client";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
@@ -44,7 +44,7 @@ const Write: NextPage = () => {
   };
 
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
-  const router = useRouter();
+
   useEffect(() => {
     if (data?.ok) {
       router.push(`/complaints/${data.complaint.comId}`);
