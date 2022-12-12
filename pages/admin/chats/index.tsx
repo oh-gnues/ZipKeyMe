@@ -54,10 +54,11 @@ const Chats: NextPage = () => {
 
    
   return (
-    <Layout title={"관리자 채팅"} hasTabBar canGoBack>
+    <Layout title={"간편 문의"} hasTabBar canGoBack>
       <Head><title>Chats</title></Head>
       <div className={"py-10 pb-16 px-4 space-y-4"}>
-        <Message message={"무엇을 도와드릴까요?"} sendAt={"15:18"}/>
+        <Message message={"무엇을 도와드릴까요?"} reversed sendAt={"15:18"}/>
+      
 
         {
           data?.chattings.map((msg,index)=>{
@@ -66,7 +67,7 @@ const Chats: NextPage = () => {
             const min = date.getMinutes();
             return(
               <div key={index}>
-                <Message message={msg?.msg} reversed sendAt={`${hour}:${min}`} />
+                <Message message={msg?.msg} sendAt={`${hour}:${min}`} />
                 </div>
 
             )
