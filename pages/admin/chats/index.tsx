@@ -67,7 +67,7 @@ const Chats: NextPage = () => {
             const min = date.getMinutes();
             return(
               <div key={index}>
-                <Message message={msg?.msg} reversed sendAt={`${hour}:${min}`} />
+                <Message message={msg?.msg} sendAt={`${hour}:${min}`} />
                 </div>
 
             )
