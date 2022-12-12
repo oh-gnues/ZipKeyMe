@@ -22,10 +22,12 @@ type successQuery = {
 const success: NextPage = () => {
   const router = useRouter();
   const [fareId, setFareId] = useState("");
+  console.log(router.query);
   useEffect(() => {
-    if (!router.isReady) return;
-    setFareId(router.query.orderId?.toString().split("-")[0] + "");
-  }, [router.isReady]);
+    if (router.query.orderId) {
+      setFareId(router.query.orderId.toString().substring(0, 1));
+    }
+  }, [router.query]);
   useEffect(() => {
     if (fareId.length === 0) return;
     console.log(fareId);
@@ -62,7 +64,7 @@ const success: NextPage = () => {
                 cy="12"
                 r="10"
                 stroke="white"
-                stroke-width="4"
+                strokeWidth="4"
               ></circle>
               <path
                 fill="currentColor"
