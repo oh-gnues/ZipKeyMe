@@ -44,6 +44,7 @@ const ComplaintDetail: NextPage = () => {
     <Layout
       title={"민원 상세"}
       canGoBack
+      alarmBtnDisable
     >
       <Head>
         <title>{data?.complaint?.title}</title>
