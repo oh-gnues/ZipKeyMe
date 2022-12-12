@@ -58,8 +58,6 @@ const Chats: NextPage = () => {
       <Head><title>Chats</title></Head>
       <div className={"py-10 pb-16 px-4 space-y-4"}>
         <Message message={"무엇을 도와드릴까요?"} sendAt={"15:18"}/>
-        {/* <Message message={"윗 집이 너무 쿵쿵거려요."} sendAt={"15:19"} reversed/> */}
-      
 
         {
           data?.chattings.map((msg,index)=>{
@@ -74,9 +72,6 @@ const Chats: NextPage = () => {
             )
           })
         }
-          <div className={`${answer ? "block " : "hidden"}`}>
-        <Message message={"조치해 드리겠습니다."} sendAt={`${hour}:${min}`}/>
-        </div>
 
         <form onSubmit={handleSubmit(onValid)} className="fixed py-2 bg-white bottom-24 inset-x-0 mx-6">
           <div className="flex relative max-w-md items-center w-full mx-auto">
